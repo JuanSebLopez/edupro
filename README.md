@@ -4,13 +4,16 @@ A new Flutter project.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+To get started with this project, follow these steps:
 
-A few resources to get you started if this is your first Flutter project:
+1. **Install Flutter**: If you haven't already, [install Flutter](https://flutter.dev/docs/get-started/install) from the official website.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+2. **Clone the Project**: Download or clone this repository and open it in your preferred IDE, preferably Visual Studio Code.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+3. **Install Dependencies**: Open a terminal within your project directory and run the following command to install all dependencies:
+    ```flutter pub get```
+
+4. **Run the Application**: After installing dependencies, execute the following command in the terminal to run the application:
+    ```flutter run```
+
+That's it! Your Flutter application should now be up and running.
