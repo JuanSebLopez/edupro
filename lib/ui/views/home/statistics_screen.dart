@@ -1,5 +1,5 @@
-import 'package:edupro/home/nav/navigation_bar.dart';
-import 'package:edupro/home/nav/statistics_card.dart';
+import 'package:edupro/shared/widgets/nav/navigation_bar.dart';
+import 'package:edupro/shared/widgets/nav/statistics_card.dart';
 import 'package:flutter/material.dart';
 
 class StatisticsPage extends StatefulWidget {

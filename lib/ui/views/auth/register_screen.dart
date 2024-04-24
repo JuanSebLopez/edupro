@@ -1,4 +1,4 @@
-import 'package:edupro/shared/textfield.dart';
+import 'package:edupro/shared/widgets/textfield.dart';
 import 'package:flutter/material.dart';
 
 class RegisterPage extends StatefulWidget {
