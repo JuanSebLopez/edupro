@@ -35,3 +35,6 @@ class App extends StatelessWidget {
         });
   }
 }
+
+class BuildContext {
+}
