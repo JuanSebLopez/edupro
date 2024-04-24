@@ -9,14 +9,14 @@ void main() async {
   GetPlatform.isWeb
       ? await Firebase.initializeApp(
           options: const FirebaseOptions(
-              apiKey: "AIzaSyA-5zJkc5CIitRspUqVIrEvjW-Epupv6f8",
+              apiKey: "AIzaSyDq50hLcg97qlXvaU-R1CuZDOGaR0onJhQ", //listo
               authDomain: "edupro-45bb5.firebaseapp.com", //listo
               databaseURL:
                   "https://edupro-45bb5-default-rtdb.firebaseio.com", //listo
               projectId: "edupro-45bb5", //listo
-              storageBucket: "gs://edupro-45bb5.appspot.com", //listo
-              messagingSenderId: "1095817888283",
-              appId: "1:1095817888283:web:59501d01ab8bfa71c92ebe"))
+              storageBucket: "edupro-45bb5.appspot.com", //listo
+              messagingSenderId: "727905531405", //listo
+              appId: "1:727905531405:android:53830fadc4f845a62fc744")) //listo
       : await Firebase.initializeApp();
   runApp(const App());
 }
