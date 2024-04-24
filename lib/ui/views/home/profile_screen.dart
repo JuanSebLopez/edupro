@@ -1,4 +1,4 @@
-import 'package:edupro/home/nav/profile_card.dart';
+import 'package:edupro/shared/widgets/nav/profile_card.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePage extends StatefulWidget {

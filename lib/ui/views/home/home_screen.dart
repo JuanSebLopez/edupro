@@ -1,6 +1,6 @@
-import 'package:edupro/home/nav/navigation_bar.dart';
+import 'package:edupro/shared/widgets/nav/navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:edupro/home/nav/modules.dart'; // Assuming modules.dart is in the edupro folder
+import 'package:edupro/shared/widgets/nav/modules.dart'; // Assuming modules.dart is in the edupro folder
 
 class HomeScreenPage extends StatefulWidget {
   const HomeScreenPage({super.key});

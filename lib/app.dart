@@ -1,9 +1,9 @@
-import 'package:edupro/home/home_login.dart';
-import 'package:edupro/home/home_screen.dart';
-import 'package:edupro/home/pages/graphs.dart';
-import 'package:edupro/home/pages/login.dart';
-import 'package:edupro/home/pages/profile.dart';
-import 'package:edupro/home/pages/register.dart';
+import 'package:edupro/ui/views/auth/welcome_screen.dart';
+import 'package:edupro/ui/views/home/home_screen.dart';
+import 'package:edupro/ui/views/home/statistics_screen.dart';
+import 'package:edupro/ui/views/auth/login_screen.dart';
+import 'package:edupro/ui/views/home/profile_screen.dart';
+import 'package:edupro/ui/views/auth/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
