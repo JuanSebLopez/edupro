@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "708567917575",
+    "project_id": "edupro-4821d",
+    "storage_bucket": "edupro-4821d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:708567917575:android:e49fcb06deb6ab6c4276a2",
+        "android_client_info": {
+          "package_name": "com.unicesar.edupro"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBU1-gvPa65NZfCUMoLnviYHktbuxLG8BM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
