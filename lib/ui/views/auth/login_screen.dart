@@ -1,7 +1,6 @@
 import 'package:edupro/shared/widgets/textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -20,7 +19,7 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "Iniciar sesión",
+          "Log In",
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 30.0,
@@ -41,16 +40,16 @@ class _LoginPageState extends State<LoginPage> {
           children: <Widget>[
             CustomTextField(
               controller: emailController,
-              labelText: 'Correo electrónico',
+              labelText: 'Email',
             ),
             const SizedBox(height: 10.0),
             CustomTextField(
               controller: passwordController,
-              labelText: 'Contraseña',
+              labelText: 'Password',
             ),
             const SizedBox(height: 20.0),
             const Text(
-              "¿Olvidaste tu contraseña?",
+              "Forgot your password?",
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.blue, // Color azul para el texto
@@ -73,7 +72,7 @@ class _LoginPageState extends State<LoginPage> {
                 ), // Tamaño mínimo del botón
               ),
               child: const Text(
-                'Inicia Sesión',
+                'Sign In',
                 style: TextStyle(color: Colors.white), //Color blanco al texto
               ),
             ),
@@ -82,7 +81,7 @@ class _LoginPageState extends State<LoginPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 const Text(
-                  "¿No estás registrado?",
+                  "Not registered?",
                 ),
                 const SizedBox(width: 5.0),
                 TextButton(
@@ -91,7 +90,7 @@ class _LoginPageState extends State<LoginPage> {
                     Get.toNamed('/register');
                   },
                   child: const Text(
-                    "Regístrate aquí",
+                    "Sign up here",
                     style: TextStyle(
                       color: Colors.blue,
                       fontWeight: FontWeight.bold,

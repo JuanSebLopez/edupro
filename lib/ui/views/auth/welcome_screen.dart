@@ -49,7 +49,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               Text(
-                'Encuentra los mejores cuestionarios para tu desempeño en las pruebas saber Pro.',
+                'Find the best quizzes for your performance on the Saber Pro tests.',
                 style: GoogleFonts.loveYaLikeASister(
                   textStyle: const TextStyle(
                     fontSize: 20,
@@ -79,7 +79,7 @@ class _HomePageState extends State<HomePage> {
                   elevation: 5, // Altura de la sombra
                 ),
                 child: const Text(
-                  'Regístrate',
+                  'Sign Up',
                   style: TextStyle(
                     color: Colors.white, // Color blanco al texto
                     fontWeight: FontWeight.bold, // Agrega grosor al texto
@@ -101,7 +101,7 @@ class _HomePageState extends State<HomePage> {
                       Colors.transparent, // Color de sombra transparente
                 ),
                 child: const Text(
-                  'Inicia sesión',
+                  'Sign In',
                   style: TextStyle(
                     color: Color(0xFF204F95), // Color del texto
                     fontWeight: FontWeight.bold, // Agrega grosor al texto

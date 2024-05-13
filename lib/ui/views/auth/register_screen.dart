@@ -12,19 +12,19 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  final name = TextEditingController();
-  final email = TextEditingController();
-  final password = TextEditingController();
-  final phoneNumber = TextEditingController();
-  final typeId = TextEditingController();
-  final id = TextEditingController();
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final phoneNumberController = TextEditingController();
+  final typeIdController = TextEditingController();
+  final idController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "Registrate",
+          "Register",
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 30.0,
@@ -44,33 +44,33 @@ class _RegisterPageState extends State<RegisterPage> {
           children: <Widget>[
             const SizedBox(height: 10.0),
             CustomTextField(
-              controller: name,
-              labelText: "Nombre completo",
+              controller: nameController,
+              labelText: "Full name",
             ),
             const SizedBox(height: 10.0),
             CustomTextField(
-              controller: email,
-              labelText: "Correo institucional",
+              controller: emailController,
+              labelText: "Institutional mail",
             ),
             const SizedBox(height: 10.0),
             CustomTextField(
-              controller: password,
-              labelText: "Contraseña",
+              controller: passwordController,
+              labelText: "Password",
             ),
             const SizedBox(height: 10.0),
             CustomTextField(
-              controller: phoneNumber,
-              labelText: "Número de telefono",
+              controller: phoneNumberController,
+              labelText: "Phone number",
             ),
             const SizedBox(height: 10.0),
             CustomTextField(
-              controller: typeId,
-              labelText: "Tipo de documento",
+              controller: typeIdController,
+              labelText: "Type of document",
             ),
             const SizedBox(height: 10.0),
             CustomTextField(
-              controller: id,
-              labelText: "No. de documento",
+              controller: idController,
+              labelText: "No. Id",
             ),
             const SizedBox(height: 30.0),
             ElevatedButton(
@@ -87,13 +87,13 @@ class _RegisterPageState extends State<RegisterPage> {
                 ), // Tamaño mínimo del botón
               ),
               child: const Text(
-                'Regístrarse',
+                'Sign up',
                 style: TextStyle(color: Colors.white), //Color blanco al texto
               ),
             ),
             const SizedBox(height: 20.0),
             const Text(
-              '¿Ya estas registrado?',
+              'Already registered?',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 15.0,
@@ -113,7 +113,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 shadowColor: Colors.transparent, // Color de sombra transparente
               ),
               child: const Text(
-                'Inicia sesión',
+                'Sign In',
                 style: TextStyle(
                   color: Color(0xFF204F95),
                   fontWeight: FontWeight.bold,
