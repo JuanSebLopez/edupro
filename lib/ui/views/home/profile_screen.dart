@@ -3,7 +3,7 @@ import 'package:edupro/shared/widgets/nav/navigation_bar.dart';
 import 'package:edupro/shared/widgets/nav/profile_card.dart';
 
 class ProfilePage extends StatelessWidget {
-  const ProfilePage({super.key});
+  const ProfilePage({Key? key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,43 +16,43 @@ class ProfilePage extends StatelessWidget {
       ),
       body: Column(
         children: <Widget>[
-          const SizedBox(height: 5.0),
+          const SizedBox(height: 20.0),
           // Profile picture and name section
-          const Center(
-            child: Column(
-              children: <Widget>[
-                CircleAvatar(
-                  radius: 50.0,
-                  backgroundImage:
-                      AssetImage('assets/images/profile_picture.jpg'),
+          const Column(
+            children: <Widget>[
+              CircleAvatar(
+                radius: 50.0,
+                backgroundImage: AssetImage('michael7.jpg'),
+              ),
+              SizedBox(height: 16.0),
+              Text(
+                'Juan David Peralta Fuentes',
+                style: TextStyle(
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
                 ),
-                SizedBox(height: 16.0),
-                Text(
-                  'Juan David Peralta Fuentes',
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                  ),
+              ),
+              Text(
+                'Estudiante',
+                style: TextStyle(
+                  fontSize: 16.0,
+                  color: Colors.grey,
                 ),
-                Text(
-                  'Estudiante',
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    color: Colors.grey,
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
           const SizedBox(height: 24.0),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              _buildCard(
-                title: 'Logros',
-                description: 'description',
-                count: 'count',
-                color: Colors.blue,
+              SizedBox(
+                width: 200, // Ajusta el ancho según tus necesidades
+                child: _buildCard(
+                  title: 'Logros',
+                  description: 'description',
+                  count: 'count',
+                  color: Colors.blue,
+                ),
               ),
               const SizedBox(height: 16),
             ],
@@ -61,11 +61,14 @@ class ProfilePage extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              _buildCard(
-                title: 'Sobre mí',
-                description: 'description',
-                count: 'count',
-                color: Colors.blue,
+              SizedBox(
+                width: 200, // Ajusta el ancho según tus necesidades
+                child: _buildCard(
+                  title: 'Sobre mí',
+                  description: 'description',
+                  count: 'count',
+                  color: Colors.blue,
+                ),
               ),
               const SizedBox(height: 16),
             ],
