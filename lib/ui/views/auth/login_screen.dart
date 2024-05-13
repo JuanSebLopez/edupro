@@ -1,5 +1,7 @@
 import 'package:edupro/shared/widgets/textfield.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -25,6 +27,12 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ),
         centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back), // Icono de flecha hacia atrás
+          onPressed: () {
+            Navigator.of(context).pop(); // Regresar a la vista anterior
+          },
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -80,6 +88,7 @@ class _LoginPageState extends State<LoginPage> {
                 TextButton(
                   onPressed: () {
                     // Acción del botón "Regístrate aquí"
+                    Get.toNamed('/register');
                   },
                   child: const Text(
                     "Regístrate aquí",
