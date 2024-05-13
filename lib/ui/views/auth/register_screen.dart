@@ -85,7 +85,7 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
             const SizedBox(height: 20.0),
             const Text(
-              '¿Ya tienes una cuenta?',
+              '¿Ya esta registrado?',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 15.0,

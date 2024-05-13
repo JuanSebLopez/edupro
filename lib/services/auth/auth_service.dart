@@ -13,7 +13,7 @@ class AuthService {
       if (kDebugMode) {
         print('Error al registrar usuario: $e');
       }
-      _showErrorDialog(context, 'Error al registrar usuario: $e');
+      //_showErrorDialog(context, 'Error al registrar usuario: $e');
       rethrow;
     }
   }

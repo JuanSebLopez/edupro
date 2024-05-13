@@ -6,6 +6,7 @@ import 'package:edupro/ui/views/home/profile_screen.dart';
 import 'package:edupro/ui/views/auth/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+//import 'package:google_fonts/google_fonts.dart';
 
 //Clase App
 //La clase padre que llamará a todas las demás clases del aplicativo
@@ -17,21 +18,22 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-        debugShowCheckedModeBanner: false,
-        //Tema de la aplicacion
-        theme: ThemeData.light(),
-        //Titulo del aplicativo
-        title: 'Edu-Pro',
-        //Ruta inicial del aplicativo
-        initialRoute: '/home',
-        //Rutas generales del aplicativo
-        routes: {
-          '/home': (context) => const HomePage(),
-          '/login': (context) => const LoginPage(),
-          '/register': (context) => const RegisterPage(),
-          '/statistics': (context) => const StatisticsPage(),
-          '/homeScreen': (context) => const HomeScreenPage(),
-          '/profile': (context) => const ProfilePage(),
-        });
+      debugShowCheckedModeBanner: false,
+      // Tema de la aplicación
+      theme: ThemeData.light(),
+      // Título del aplicativo
+      title: 'Edu-Pro',
+      // Ruta inicial del aplicativo
+      initialRoute: '/home',
+      // Rutas generales del aplicativo
+      routes: {
+        '/home': (context) => const HomePage(),
+        '/login': (context) => const LoginPage(),
+        '/register': (context) => const RegisterPage(),
+        '/statistics': (context) => const StatisticsPage(),
+        '/homeScreen': (context) => const HomeScreenPage(),
+        '/profile': (context) => const ProfilePage(),
+      },
+    );
   }
 }
