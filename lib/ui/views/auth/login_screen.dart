@@ -77,31 +77,38 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             const SizedBox(height: 20.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+            Column(
+              // Envolver el Row en una Column
               children: <Widget>[
-                const Text(
-                  "Not registered?",
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    const Text(
+                      "Not registered?",
+                    ),
+                    const SizedBox(width: 5.0),
+                    TextButton(
+                      onPressed: () {
+                        // Acción del botón "Regístrate aquí"
+                        Get.toNamed('/register');
+                      },
+                      child: const Text(
+                        "Sign up here",
+                        style: TextStyle(
+                          color: Colors.blue,
+                          fontWeight: FontWeight.bold,
+                        ), // Color azul para el texto del botón
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(width: 5.0),
-                TextButton(
-                  onPressed: () {
-                    // Acción del botón "Regístrate aquí"
-                    Get.toNamed('/register');
-                  },
-                  child: const Text(
-                    "Sign up here",
-                    style: TextStyle(
-                      color: Colors.blue,
-                      fontWeight: FontWeight.bold,
-                    ), // Color azul para el texto del botón
-                  ),
+                const SizedBox(
+                    height:
+                        190.0), // Ajustar el espacio entre el botón y la imagen
+                Image.asset(
+                  "ImgHome2Png.png", // Ruta de la imagen
                 ),
               ],
-            ),
-            const SizedBox(height: 20.0),
-            Image.asset(
-              "ImgHome2Png.png", // Ruta de la imagen
             ),
           ],
         ),

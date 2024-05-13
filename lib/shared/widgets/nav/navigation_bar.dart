@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class NavigationBarWidget extends StatelessWidget {
-  const NavigationBarWidget({super.key});
+  const NavigationBarWidget({Key? key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class NavigationBarWidget extends StatelessWidget {
           label: 'Perfil',
         ),
       ],
-      currentIndex: currentRoute == '/homeScreen' ? 1 : 0,
+      currentIndex: _getCurrentIndex(currentRoute),
       onTap: (int index) {
         // Handle navigation to the selected page
         switch (index) {
@@ -37,5 +37,15 @@ class NavigationBarWidget extends StatelessWidget {
         }
       },
     );
+  }
+
+  int _getCurrentIndex(String? currentRoute) {
+    if (currentRoute == '/statistics') {
+      return 0;
+    } else if (currentRoute == '/homeScreen') {
+      return 1;
+    } else {
+      return 2;
+    }
   }
 }
