@@ -11,7 +11,7 @@ class ModuleCard extends StatefulWidget {
     required this.title,
     required this.color, // Actualizada la propiedad color
     required this.porcentage,
-    required this.width, // Se añade el parámetro width
+    required this.width, required Null Function() onExpand, required Color textColor, // Se añade el parámetro width
   });
 
   @override

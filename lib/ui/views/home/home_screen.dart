@@ -1,4 +1,3 @@
-// main.dart
 import 'package:flutter/material.dart';
 import 'package:edupro/shared/widgets/nav/navigation_bar.dart';
 import 'package:edupro/shared/widgets/nav/modules.dart';
@@ -7,6 +6,7 @@ class HomeScreenPage extends StatefulWidget {
   const HomeScreenPage({Key? key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _HomeScreenState createState() => _HomeScreenState();
 }
 
@@ -18,18 +18,52 @@ class _HomeScreenState extends State<HomeScreenPage> {
   ];
   int _colorIndex = 0;
 
+  final List<bool> _isExpandedList = List.generate(15, (index) => false);
+
   Color _getNextColor() {
     final color = _colors[_colorIndex];
     _colorIndex = (_colorIndex + 1) % _colors.length;
-    return color;
+    if (color == const Color(0xFF33B958) || color == const Color(0xFF0C549C)) {
+      // Aplicar opacidad al color de fondo para los colores específicos
+      return color.withOpacity(0.46);
+    } else {
+      return color;
+    }
   }
 
-  Widget _buildModule(String title) {
-    return ModuleCard(
-      title: title,
-      porcentage: '100%',
-      color: _getNextColor(),
-      width: 300,
+  Color _getTextColor(Color backgroundColor) {
+    // Verificar si el color de fondo es verde o azul oscuro
+    if (backgroundColor == const Color(0xFF33B958) ||
+        backgroundColor == const Color(0xFF0C549C)) {
+      // Si el color de fondo es verde o azul oscuro, devolvemos un color negro
+      return Colors.black;
+    } else {
+      // De lo contrario, devolvemos un color blanco para otros colores de fondo
+      return Colors.white;
+    }
+  }
+
+  Widget _buildModule(String title, int index) {
+    final color = _getNextColor();
+    final textColor = _getTextColor(color);
+
+    return Padding(
+      padding: EdgeInsets.only(
+        top: _isExpandedList[index] ? 0.0 : 8.0,
+        bottom: _isExpandedList[index] ? 8.0 : 0.0,
+      ),
+      child: ModuleCard(
+        title: title,
+        porcentage: '75%',
+        color: color,
+        width: 300,
+        onExpand: () {
+          setState(() {
+            _isExpandedList[index] = !_isExpandedList[index];
+          });
+        },
+        textColor: textColor,
+      ),
     );
   }
 
@@ -65,21 +99,21 @@ class _HomeScreenState extends State<HomeScreenPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    _buildModule('Ingles'),
-                    _buildModule('Español'),
-                    _buildModule('Matematicas'),
-                    _buildModule('Programación'),
-                    _buildModule('Física'),
-                    _buildModule('Sociales'),
-                    _buildModule('Quimica'),
-                    _buildModule('Biologia'),
-                    _buildModule('Lectura critica'),
-                    _buildModule('Geometria'),
-                    _buildModule('Algebra'),
-                    _buildModule('Calculo'),
-                    _buildModule('Estadistica'),
-                    _buildModule('Catedra'),
-                    _buildModule('Etica'),
+                    _buildModule('Ingles', 0),
+                    _buildModule('Español', 1),
+                    _buildModule('Matematicas', 2),
+                    _buildModule('Programación', 3),
+                    _buildModule('Física', 4),
+                    _buildModule('Sociales', 5),
+                    _buildModule('Quimica', 6),
+                    _buildModule('Biologia', 7),
+                    _buildModule('Lectura critica', 8),
+                    _buildModule('Geometria', 9),
+                    _buildModule('Algebra', 10),
+                    _buildModule('Calculo', 11),
+                    _buildModule('Estadistica', 12),
+                    _buildModule('Catedra', 13),
+                    _buildModule('Etica', 14),
                   ],
                 ),
               ),
