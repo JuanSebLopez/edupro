@@ -1,29 +1,20 @@
+// login_page.dart
+
+import 'package:edupro/models/user_data.dart';
 import 'package:edupro/shared/widgets/textfield.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  const LoginPage({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-
-  // Lista simulada de usuarios registrados (podría ser reemplazada por una base de datos real)
-  final List<Map<String, String>> registeredUsers = [
-    {
-      'email': 'user1@example.com',
-      'password': 'password1',
-    },
-    {
-      'email': 'user2@example.com',
-      'password': 'password2',
-    },
-    // Añade más usuarios según sea necesario
-  ];
 
   void _signIn() {
     String email = emailController.text;
@@ -42,14 +33,14 @@ class _LoginPageState extends State<LoginPage> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text("Email o Password inválido"),
-            content: Text("Por favor, revisa tus credenciales."),
+            title: const Text("Email o Password inválido"),
+            content: const Text("Por favor, revisa tus credenciales."),
             actions: [
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text("OK"),
+                child: const Text("OK"),
               ),
             ],
           );

@@ -1,2 +1,2 @@
 // user_data.dart
-List<Map<String, String>> registeredUsers = [];
+List<Map<String, dynamic>> registeredUsers = [];

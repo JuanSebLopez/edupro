@@ -1,10 +1,12 @@
+import 'package:edupro/models/user_data.dart';
 import 'package:edupro/shared/widgets/textfield.dart';
 import 'package:flutter/material.dart';
 
 class RegisterPage extends StatefulWidget {
-  const RegisterPage({Key? key}) : super(key: key);
+  const RegisterPage({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _RegisterPageState createState() => _RegisterPageState();
 }
 
@@ -29,14 +31,14 @@ class _RegisterPageState extends State<RegisterPage> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text("Faltan campos por llenar"),
-            content: Text("Por favor, complete todos los campos."),
+            title: const Text("Faltan campos por llenar"),
+            content: const Text("Por favor, complete todos los campos."),
             actions: [
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text("OK"),
+                child: const Text("OK"),
               ),
             ],
           );
@@ -55,9 +57,39 @@ class _RegisterPageState extends State<RegisterPage> {
       'id': idController.text,
     };
 
+    // Agregar el nuevo usuario a la lista de usuarios registrados
+    registeredUsers.add(userData);
+
+    // Mostrar un mensaje de éxito
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Registro exitoso"),
+          content: const Text("El usuario ha sido registrado correctamente."),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text("OK"),
+            ),
+          ],
+        );
+      },
+    );
+
     // Imprimir la información del usuario por consola
     print("Nuevo usuario registrado:");
     print(userData);
+
+    // Limpiar los campos de texto
+    nameController.clear();
+    emailController.clear();
+    passwordController.clear();
+    phoneNumberController.clear();
+    typeIdController.clear();
+    idController.clear();
   }
 
   @override
