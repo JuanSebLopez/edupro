@@ -1,5 +1,6 @@
 import 'package:edupro/ui/views/auth/welcome_screen.dart';
 import 'package:edupro/ui/views/home/home_screen.dart';
+import 'package:edupro/ui/views/home/settings_screen.dart';
 import 'package:edupro/ui/views/home/statistics_screen.dart';
 import 'package:edupro/ui/views/auth/login_screen.dart';
 import 'package:edupro/ui/views/home/profile_screen.dart';
@@ -33,6 +34,7 @@ class App extends StatelessWidget {
         '/statistics': (context) => const StatisticsPage(),
         '/homeScreen': (context) => const HomeScreenPage(),
         '/profile': (context) => const ProfilePage(),
+        '/settings': (context) => const SettingsPage(),
       },
     );
   }

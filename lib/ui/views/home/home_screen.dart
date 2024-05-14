@@ -3,7 +3,7 @@ import 'package:edupro/shared/widgets/nav/navigation_bar.dart';
 import 'package:edupro/shared/widgets/nav/modules.dart';
 
 class HomeScreenPage extends StatefulWidget {
-  const HomeScreenPage({Key? key});
+  const HomeScreenPage({super.key});
 
   @override
   // ignore: library_private_types_in_public_api
