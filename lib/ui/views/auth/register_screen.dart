@@ -1,13 +1,10 @@
 import 'package:edupro/shared/widgets/textfield.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-//import 'package:get/get_core/src/get_main.dart';
 
 class RegisterPage extends StatefulWidget {
-  const RegisterPage({super.key});
+  const RegisterPage({Key? key}) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
   _RegisterPageState createState() => _RegisterPageState();
 }
 
@@ -18,6 +15,50 @@ class _RegisterPageState extends State<RegisterPage> {
   final phoneNumberController = TextEditingController();
   final typeIdController = TextEditingController();
   final idController = TextEditingController();
+
+  void _registerUser() {
+    // Verificar si todos los campos están completos
+    if (nameController.text.isEmpty ||
+        emailController.text.isEmpty ||
+        passwordController.text.isEmpty ||
+        phoneNumberController.text.isEmpty ||
+        typeIdController.text.isEmpty ||
+        idController.text.isEmpty) {
+      // Mostrar aviso si falta algún campo
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Faltan campos por llenar"),
+            content: Text("Por favor, complete todos los campos."),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text("OK"),
+              ),
+            ],
+          );
+        },
+      );
+      return;
+    }
+
+    // Almacenar los valores en un mapa
+    Map<String, dynamic> userData = {
+      'name': nameController.text,
+      'email': emailController.text,
+      'password': passwordController.text,
+      'phoneNumber': phoneNumberController.text,
+      'typeId': typeIdController.text,
+      'id': idController.text,
+    };
+
+    // Imprimir la información del usuario por consola
+    print("Nuevo usuario registrado:");
+    print(userData);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +73,9 @@ class _RegisterPageState extends State<RegisterPage> {
         ),
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back), // Icono de flecha hacia atrás
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.of(context).pop(); // Regresar a la vista anterior
+            Navigator.of(context).pop();
           },
         ),
       ),
@@ -74,21 +115,17 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
             const SizedBox(height: 30.0),
             ElevatedButton(
-              onPressed: () {
-                // Acción del botón
-              },
+              onPressed: _registerUser,
               style: ElevatedButton.styleFrom(
-                minimumSize: const Size(270, 51), //Tamaño del boton (w, h)
-                backgroundColor:
-                    const Color(0xFF204F95), // Color de fondo del botón
+                minimumSize: const Size(270, 51),
+                backgroundColor: const Color(0xFF204F95),
                 shape: RoundedRectangleBorder(
-                  borderRadius:
-                      BorderRadius.circular(10), // Radio de la esquina
-                ), // Tamaño mínimo del botón
+                  borderRadius: BorderRadius.circular(10),
+                ),
               ),
               child: const Text(
                 'Sign up',
-                style: TextStyle(color: Colors.white), //Color blanco al texto
+                style: TextStyle(color: Colors.white),
               ),
             ),
             const SizedBox(height: 20.0),
@@ -102,22 +139,19 @@ class _RegisterPageState extends State<RegisterPage> {
             const SizedBox(height: 16.0),
             ElevatedButton(
               onPressed: () {
-                // Acción del botón
-                Get.toNamed('/login');
+                Navigator.of(context).pop();
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor:
-                    Colors.transparent, // Color de fondo transparente
-                elevation:
-                    0, // Sin sombra, con esto el boton se vuelve de verdad transparente
-                shadowColor: Colors.transparent, // Color de sombra transparente
+                backgroundColor: Colors.transparent,
+                elevation: 0,
+                shadowColor: Colors.transparent,
               ),
               child: const Text(
                 'Sign In',
                 style: TextStyle(
                   color: Color(0xFF204F95),
                   fontWeight: FontWeight.bold,
-                  fontSize: 16.0, // Color del texto
+                  fontSize: 16.0,
                 ),
               ),
             )
@@ -125,6 +159,5 @@ class _RegisterPageState extends State<RegisterPage> {
         ),
       ),
     );
-    //throw UnimplementedError();
   }
 }

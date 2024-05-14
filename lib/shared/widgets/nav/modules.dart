@@ -7,15 +7,16 @@ class ModuleCard extends StatefulWidget {
   final double width; // Nueva propiedad para el ancho
 
   const ModuleCard({
-    super.key,
+    Key? key,
     required this.title,
     required this.color, // Actualizada la propiedad color
     required this.porcentage,
-    required this.width, required Null Function() onExpand, required Color textColor, // Se añade el parámetro width
+    required this.width,
+    required Null Function() onExpand,
+    required Color textColor,
   });
 
   @override
-  // ignore: library_private_types_in_public_api
   _ModuleCardState createState() => _ModuleCardState();
 }
 
@@ -24,58 +25,56 @@ class _ModuleCardState extends State<ModuleCard> {
 
   @override
   Widget build(BuildContext context) {
+    Color titleColor =
+        widget.color.computeLuminance() > 0.5 ? Colors.black : Colors.white;
+
     return SizedBox(
       // Usamos un SizedBox para controlar el ancho
       width: widget.width,
       child: Card(
         color: widget.color, // Establecer el color de fondo del Card
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.symmetric(
+              vertical: 10, horizontal: 16), // Ajuste del padding
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              // Image.asset(imagePath), // Display the module image
-              const SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     widget.title,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white, // Color blanco para el título
+                      color:
+                          titleColor, // Color del título basado en el color de fondo
                     ),
                   ),
-                  Row(
-                    children: [
-                      Text(
-                        widget.porcentage,
-                        style: const TextStyle(
-                          fontWeight: FontWeight
-                              .bold, // Asegura que el porcentaje sea visible
-                          color:
-                              Colors.white, // Color blanco para el porcentaje
+                  IconButton(
+                    alignment: Alignment.center,
+                    onPressed: () {
+                      setState(() {
+                        _isExpanded = !_isExpanded;
+                      });
+                    },
+                    icon: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Icon(
+                          _isExpanded ? Icons.remove_circle : Icons.add_circle,
+                          color: Colors
+                              .white, // Color del centro del icono igual al color de fondo del módulo
+                          size: 20, // Tamaño del icono
                         ),
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          setState(() {
-                            _isExpanded = !_isExpanded;
-                          });
-                        },
-                        icon: Icon(
-                          _isExpanded ? Icons.remove : Icons.add,
-                          color: Colors.white, // Color blanco para el icono
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ],
               ),
               if (_isExpanded) ...[
                 // Widget para los submódulos cuando está expandido
-                const SizedBox(height: 10),
+                const SizedBox(height: 10.0),
                 const Text(
                   'Submódulo 1',
                   style: TextStyle(

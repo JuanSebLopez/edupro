@@ -23,12 +23,7 @@ class _HomeScreenState extends State<HomeScreenPage> {
   Color _getNextColor() {
     final color = _colors[_colorIndex];
     _colorIndex = (_colorIndex + 1) % _colors.length;
-    if (color == const Color(0xFF33B958) || color == const Color(0xFF0C549C)) {
-      // Aplicar opacidad al color de fondo para los colores específicos
-      return color.withOpacity(0.46);
-    } else {
-      return color;
-    }
+    return color;
   }
 
   Color _getTextColor(Color backgroundColor) {
@@ -109,11 +104,6 @@ class _HomeScreenState extends State<HomeScreenPage> {
                     _buildModule('Biologia', 7),
                     _buildModule('Lectura critica', 8),
                     _buildModule('Geometria', 9),
-                    _buildModule('Algebra', 10),
-                    _buildModule('Calculo', 11),
-                    _buildModule('Estadistica', 12),
-                    _buildModule('Catedra', 13),
-                    _buildModule('Etica', 14),
                   ],
                 ),
               ),
