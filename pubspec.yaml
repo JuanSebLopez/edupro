@@ -29,6 +29,9 @@ flutter:
 
   assets:
     - assets/michael7.jpg
+    - assets/home.png
+    - assets/usuario.png
+    - assets/estadistica.png
 
 
   # fonts:
