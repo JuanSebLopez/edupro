@@ -7,7 +7,7 @@ class Question {
   Question({
     required this.subject,
     required this.statement,
-    required this.answers,
+    required this.answers, String? correctAnswer,
     //required this.itsCorrect
   });
 }
