@@ -1,3 +1,4 @@
+import 'package:edupro/ui/admin/question_screen.dart';
 import 'package:edupro/ui/views/auth/welcome_screen.dart';
 import 'package:edupro/ui/views/home/home_screen.dart';
 import 'package:edupro/ui/views/home/settings_screen.dart';
@@ -35,6 +36,7 @@ class App extends StatelessWidget {
         '/homeScreen': (context) => const HomeScreenPage(),
         '/profile': (context) => const ProfilePage(),
         '/settings': (context) => const SettingsPage(),
+        '/questions': (context) => const QuestionsPage(),
       },
     );
   }

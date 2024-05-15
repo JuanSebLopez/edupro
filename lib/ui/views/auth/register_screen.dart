@@ -1,5 +1,6 @@
 import 'package:edupro/models/user_data.dart';
 import 'package:edupro/shared/widgets/textfield.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -80,8 +81,10 @@ class _RegisterPageState extends State<RegisterPage> {
     );
 
     // Imprimir la información del usuario por consola
-    print("Nuevo usuario registrado:");
-    print(userData);
+    if (kDebugMode) {
+      print("Nuevo usuario registrado:");
+      print(userData);
+    }
 
     // Limpiar los campos de texto
     nameController.clear();
