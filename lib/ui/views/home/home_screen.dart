@@ -65,52 +65,70 @@ class _HomeScreenState extends State<HomeScreenPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              const SizedBox(height: 10.0),
-              Container(
-                margin: const EdgeInsets.all(4.0),
-                child: Image.asset('ImgHome2Png.png'),
-              ),
-              const SizedBox(height: 20.0),
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: const BorderRadius.all(Radius.circular(10)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.2),
-                      spreadRadius: 3,
-                      blurRadius: 10,
-                      offset: const Offset(0, 3),
+      body: Stack(
+        // Use a Stack to position the button on top of the content
+        children: <Widget>[
+          // Your existing body content goes here
+          SingleChildScrollView(
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  const SizedBox(height: 10.0),
+                  Container(
+                    margin: const EdgeInsets.all(4.0),
+                    child: Image.asset('ImgHome2Png.png'),
+                  ),
+                  const SizedBox(height: 20.0),
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: const BorderRadius.all(Radius.circular(10)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.2),
+                          spreadRadius: 3,
+                          blurRadius: 10,
+                          offset: const Offset(0, 3),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    _buildModule('Ingles', 0),
-                    _buildModule('Español', 1),
-                    _buildModule('Matematicas', 2),
-                    _buildModule('Programación', 3),
-                    _buildModule('Física', 4),
-                    _buildModule('Sociales', 5),
-                    _buildModule('Quimica', 6),
-                    _buildModule('Biologia', 7),
-                    _buildModule('Lectura critica', 8),
-                    _buildModule('Geometria', 9),
-                  ],
-                ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        _buildModule('Ingles', 0),
+                        _buildModule('Español', 1),
+                        _buildModule('Matematicas', 2),
+                        _buildModule('Programación', 3),
+                        _buildModule('Física', 4),
+                        _buildModule('Sociales', 5),
+                        _buildModule('Quimica', 6),
+                        _buildModule('Biologia', 7),
+                        _buildModule('Lectura critica', 8),
+                        _buildModule('Geometria', 9),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                ],
               ),
-              const SizedBox(height: 20),
-            ],
+            ),
           ),
-        ),
+
+          // Positioned widget for the "+" button
+          Positioned(
+            bottom: 20, // Adjust the bottom offset as needed
+            right: 20, // Adjust the right offset as needed
+            child: FloatingActionButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/questions');
+              },
+              child: const Icon(Icons.add),
+            ),
+          ),
+        ],
       ),
       bottomNavigationBar: const NavigationBarWidget(),
     );
