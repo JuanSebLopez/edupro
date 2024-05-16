@@ -13,6 +13,9 @@ class _QuestionsPageState extends State<QuestionsPage> {
   final TextEditingController _controller2 = TextEditingController();
   final TextEditingController _controller3 = TextEditingController();
   final TextEditingController _controller4 = TextEditingController();
+  final TextEditingController _controller5 =
+      TextEditingController(); // Nuevo controlador para la respuesta D
+
   String? _selectedSubject;
   String? _selectedCorrectAnswer;
 
@@ -159,7 +162,7 @@ class _QuestionsPageState extends State<QuestionsPage> {
                                           ? _controller3
                                           : i == 2
                                               ? _controller4
-                                              : null,
+                                              : _controller5, // Asignar el nuevo controlador para la respuesta D
                                   decoration: const InputDecoration(
                                     contentPadding: EdgeInsets.symmetric(
                                       vertical: 10.0,
@@ -231,6 +234,8 @@ class _QuestionsPageState extends State<QuestionsPage> {
                       String answerA = _controller2.text;
                       String answerB = _controller3.text;
                       String answerC = _controller4.text;
+                      String answerD = _controller5
+                          .text; // Capturar el texto de la respuesta D
                       String correctAnswer = _selectedCorrectAnswer ?? '';
 
                       // Validar que todos los campos estén llenos antes de agregar la pregunta
@@ -239,12 +244,19 @@ class _QuestionsPageState extends State<QuestionsPage> {
                           answerA.isNotEmpty &&
                           answerB.isNotEmpty &&
                           answerC.isNotEmpty &&
+                          answerD
+                              .isNotEmpty && // Agregar la validación para la respuesta D
                           correctAnswer.isNotEmpty) {
                         // Agregar la pregunta a la lista questions
                         questions.add({
                           'subject': subject,
                           'question': question,
-                          'answers': [answerA, answerB, answerC],
+                          'answers': [
+                            answerA,
+                            answerB,
+                            answerC,
+                            answerD
+                          ], // Agregar la respuesta D
                           'correctAnswer': correctAnswer,
                         });
 
@@ -252,8 +264,17 @@ class _QuestionsPageState extends State<QuestionsPage> {
                         print("Nueva pregunta registrada:");
                         print("Materia: $subject");
                         print("Pregunta: $question");
-                        print("Respuestas: $answerA, $answerB, $answerC");
+                        print(
+                            "Respuestas: $answerA, $answerB, $answerC, $answerD");
                         print("Respuesta correcta: $correctAnswer");
+
+                        // Mostrar mensaje de éxito
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Pregunta registrada con éxito'),
+                            duration: Duration(seconds: 2),
+                          ),
+                        );
                       }
                     },
                     child: const Text(
