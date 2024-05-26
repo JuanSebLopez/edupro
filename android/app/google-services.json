@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "591980991177",
+    "project_id": "edupro-95d8d",
+    "storage_bucket": "edupro-95d8d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:591980991177:android:d78f9536f908ac16ad7318",
+        "android_client_info": {
+          "package_name": "com.example.edupro"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvWlleR1z99gtdmMClBI8kSglJi5w9HAs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:591980991177:android:22b41d142e02a0d5ad7318",
+        "android_client_info": {
+          "package_name": "com.example.flutter_application_2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvWlleR1z99gtdmMClBI8kSglJi5w9HAs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
