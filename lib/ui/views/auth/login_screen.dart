@@ -1,6 +1,7 @@
-// login_page.dart
+// login_screen.dart
 
 import 'package:edupro/models/user_data.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:edupro/shared/widgets/textfield.dart';
 import 'package:flutter/material.dart';
 
@@ -16,15 +17,20 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  void _signIn() {
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  void _signIn() async {
     String email = emailController.text;
     String password = passwordController.text;
 
-    // Verificar si el usuario existe y las credenciales son válidas
-    bool isValidUser = registeredUsers
-        .any((user) => user['email'] == email && user['password'] == password);
+    // Consulta Firestore para verificar si el usuario existe
+    QuerySnapshot querySnapshot = await firestore
+        .collection('users')
+        .where('email', isEqualTo: email)
+        .where('password', isEqualTo: password)
+        .get();
 
-    if (isValidUser) {
+    if (querySnapshot.docs.isNotEmpty) {
       // Si las credenciales son válidas, redirige al usuario a la pantalla de inicio
       Navigator.pushNamed(context, '/homeScreen');
     } else {
@@ -33,7 +39,7 @@ class _LoginPageState extends State<LoginPage> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text("Email o Password inválido"),
+            title: const Text("Correo o Contraseña inválidos"),
             content: const Text("Por favor, revisa tus credenciales."),
             actions: [
               TextButton(
@@ -41,7 +47,7 @@ class _LoginPageState extends State<LoginPage> {
                   Navigator.of(context).pop();
                 },
                 child: const Text("OK"),
-              ),
+              )
             ],
           );
         },

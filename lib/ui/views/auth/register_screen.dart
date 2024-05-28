@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:edupro/models/user_data.dart';
 import 'package:edupro/shared/widgets/textfield.dart';
 import 'package:flutter/foundation.dart';
@@ -19,7 +20,9 @@ class _RegisterPageState extends State<RegisterPage> {
   final typeIdController = TextEditingController();
   final idController = TextEditingController();
 
-  void _registerUser() {
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  void _registerUser() async {
     // Verificar si todos los campos están completos
     if (nameController.text.isEmpty ||
         emailController.text.isEmpty ||
@@ -58,6 +61,63 @@ class _RegisterPageState extends State<RegisterPage> {
       'id': idController.text,
     };
 
+    // Agregar el nuevo usuario a Firestore
+    try {
+      await firestore.collection('users').add(userData);
+
+      // Mostrar un mensaje de éxito
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text("Registro exitoso"),
+            content: const Text("El usuario ha sido registrado correctamente."),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text("OK"),
+              ),
+            ],
+          );
+        },
+      );
+
+      // Imprimir la información del usuario por consola
+      if (kDebugMode) {
+        print("Nuevo usuario registrado:");
+        print(userData);
+      }
+
+      // Limpiar los campos de texto
+      nameController.clear();
+      emailController.clear();
+      passwordController.clear();
+      phoneNumberController.clear();
+      typeIdController.clear();
+      idController.clear();
+    } catch (e) {
+      // Mostrar un mensaje de error si hay un problema al guardar en Firestore
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text("Error"),
+            content: Text("Hubo un problema al registrar el usuario: $e"),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text("OK"),
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     // Agregar el nuevo usuario a la lista de usuarios registrados
     registeredUsers.add(userData);
 
@@ -79,20 +139,6 @@ class _RegisterPageState extends State<RegisterPage> {
         );
       },
     );
-
-    // Imprimir la información del usuario por consola
-    if (kDebugMode) {
-      print("Nuevo usuario registrado:");
-      print(userData);
-    }
-
-    // Limpiar los campos de texto
-    nameController.clear();
-    emailController.clear();
-    passwordController.clear();
-    phoneNumberController.clear();
-    typeIdController.clear();
-    idController.clear();
   }
 
   @override
