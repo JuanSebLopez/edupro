@@ -7,7 +7,7 @@ class ModuleCard extends StatefulWidget {
   final double width; // Nueva propiedad para el ancho
 
   const ModuleCard({
-    Key? key,
+    super.key,
     required this.title,
     required this.color, // Actualizada la propiedad color
     required this.porcentage,
@@ -17,10 +17,10 @@ class ModuleCard extends StatefulWidget {
   });
 
   @override
-  _ModuleCardState createState() => _ModuleCardState();
+  ModuleCardState createState() => ModuleCardState();
 }
 
-class _ModuleCardState extends State<ModuleCard> {
+class ModuleCardState extends State<ModuleCard> {
   bool _isExpanded = false;
 
   @override

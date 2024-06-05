@@ -1,8 +1,7 @@
-// login_screen.dart
-
-import 'package:edupro/models/user_data.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:edupro/models/auth_result.dart';
+import 'package:edupro/services/auth_service.dart';
 import 'package:edupro/shared/widgets/textfield.dart';
+import 'package:edupro/shared/widgets/warnings/warning_snackbar.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -14,44 +13,22 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-
-  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final AuthService _authService = AuthService();
 
   void _signIn() async {
     String email = emailController.text;
     String password = passwordController.text;
 
-    // Consulta Firestore para verificar si el usuario existe
-    QuerySnapshot querySnapshot = await firestore
-        .collection('users')
-        .where('email', isEqualTo: email)
-        .where('password', isEqualTo: password)
-        .get();
+    AuthResult result = await _authService.signIn(email, password);
 
-    if (querySnapshot.docs.isNotEmpty) {
-      // Si las credenciales son válidas, redirige al usuario a la pantalla de inicio
+    if (!mounted) return;
+
+    if (result.success) {
       Navigator.pushNamed(context, '/homeScreen');
     } else {
-      // Si las credenciales no son válidas, muestra un mensaje de error
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text("Correo o Contraseña inválidos"),
-            content: const Text("Por favor, revisa tus credenciales."),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text("OK"),
-              )
-            ],
-          );
-        },
-      );
+      WarningSnackbar.show(context, result.message ?? "Error desconocido.");
     }
   }
 
