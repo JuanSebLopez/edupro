@@ -39,7 +39,7 @@ class SettingsPage extends StatelessWidget {
                     },
                     child: const CircleAvatar(
                       radius: 80.0,
-                      backgroundImage: AssetImage('michael7.jpg'),
+                      backgroundImage: AssetImage('michael.jpg'),
                     ),
                   ),
                   IconButton(

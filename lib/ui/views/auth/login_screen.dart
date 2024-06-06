@@ -1,7 +1,7 @@
-// login_page.dart
-
-import 'package:edupro/models/user_data.dart';
+import 'package:edupro/models/auth_result.dart';
+import 'package:edupro/services/auth_service.dart';
 import 'package:edupro/shared/widgets/textfield.dart';
+import 'package:edupro/shared/widgets/warnings/warning_snackbar.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -13,39 +13,22 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final AuthService _authService = AuthService();
 
-  void _signIn() {
+  void _signIn() async {
     String email = emailController.text;
     String password = passwordController.text;
 
-    // Verificar si el usuario existe y las credenciales son válidas
-    bool isValidUser = registeredUsers
-        .any((user) => user['email'] == email && user['password'] == password);
+    AuthResult result = await _authService.signIn(email, password);
 
-    if (isValidUser) {
-      // Si las credenciales son válidas, redirige al usuario a la pantalla de inicio
+    if (!mounted) return;
+
+    if (result.success) {
       Navigator.pushNamed(context, '/homeScreen');
     } else {
-      // Si las credenciales no son válidas, muestra un mensaje de error
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text("Email o Password inválido"),
-            content: const Text("Por favor, revisa tus credenciales."),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text("OK"),
-              ),
-            ],
-          );
-        },
-      );
+      WarningSnackbar.show(context, result.message ?? "Error desconocido.");
     }
   }
 
@@ -132,7 +115,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const SizedBox(height: 190.0),
                 Image.asset(
-                  "ImgHome2Png.png",
+                  "app_logo.png",
                 ),
               ],
             ),

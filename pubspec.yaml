@@ -11,6 +11,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  shared_preferences: ^2.0.9
   cupertino_icons: ^1.0.6
   get: ^4.6.6
   firebase_core: ^2.31.1
@@ -27,10 +28,14 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/michael7.jpg
-    - assets/home.png
-    - assets/usuario.png
-    - assets/estadistica.png
+    - assets/images/michael.jpg
+    - assets/images/app_logo.png
+    - assets/images/background_home.png
+    - assets/images/home_logo.png
+    - assets/images/user_logo.png
+    - assets/images/statistics_logo.png
+    - assets/images/background_home.svg
+    - assets/images/app_logo.svg
 
 
   # fonts:

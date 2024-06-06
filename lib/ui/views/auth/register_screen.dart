@@ -1,6 +1,7 @@
-import 'package:edupro/models/user_data.dart';
+import 'package:edupro/models/auth_result.dart';
+import 'package:edupro/services/auth_service.dart';
 import 'package:edupro/shared/widgets/textfield.dart';
-import 'package:flutter/foundation.dart';
+import 'package:edupro/shared/widgets/warnings/warning_snackbar.dart';
 import 'package:flutter/material.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -18,81 +19,55 @@ class _RegisterPageState extends State<RegisterPage> {
   final phoneNumberController = TextEditingController();
   final typeIdController = TextEditingController();
   final idController = TextEditingController();
+  final AuthService _authService = AuthService();
+  final _formKey = GlobalKey<FormState>();
 
-  void _registerUser() {
-    // Verificar si todos los campos están completos
-    if (nameController.text.isEmpty ||
-        emailController.text.isEmpty ||
-        passwordController.text.isEmpty ||
-        phoneNumberController.text.isEmpty ||
-        typeIdController.text.isEmpty ||
-        idController.text.isEmpty) {
-      // Mostrar aviso si falta algún campo
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text("Faltan campos por llenar"),
-            content: const Text("Por favor, complete todos los campos."),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text("OK"),
-              ),
-            ],
-          );
-        },
-      );
-      return;
-    }
+  void _registerUser() async {
+    if (_formKey.currentState != null && _formKey.currentState!.validate()) {
+      Map<String, dynamic> userData = {
+        'name': nameController.text,
+        'email': emailController.text,
+        'password': passwordController.text,
+        'phoneNumber': phoneNumberController.text,
+        'typeId': typeIdController.text,
+        'id': idController.text,
+      };
 
-    // Almacenar los valores en un mapa
-    Map<String, dynamic> userData = {
-      'name': nameController.text,
-      'email': emailController.text,
-      'password': passwordController.text,
-      'phoneNumber': phoneNumberController.text,
-      'typeId': typeIdController.text,
-      'id': idController.text,
-    };
+      AuthResult result = await _authService.registerUser(userData);
 
-    // Agregar el nuevo usuario a la lista de usuarios registrados
-    registeredUsers.add(userData);
+      if (!mounted) return;
 
-    // Mostrar un mensaje de éxito
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text("Registro exitoso"),
-          content: const Text("El usuario ha sido registrado correctamente."),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text("OK"),
-            ),
-          ],
+      if (result.success) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text("Registro exitoso"),
+              content:
+                  const Text("El usuario ha sido registrado exitosamente."),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text("OK"),
+                ),
+              ],
+            );
+          },
         );
-      },
-    );
 
-    // Imprimir la información del usuario por consola
-    if (kDebugMode) {
-      print("Nuevo usuario registrado:");
-      print(userData);
+        // Limpiar los campos de texto
+        nameController.clear();
+        emailController.clear();
+        passwordController.clear();
+        phoneNumberController.clear();
+        typeIdController.clear();
+        idController.clear();
+      } else {
+        WarningSnackbar.show(context, result.message ?? "Error desconocido.");
+      }
     }
-
-    // Limpiar los campos de texto
-    nameController.clear();
-    emailController.clear();
-    passwordController.clear();
-    phoneNumberController.clear();
-    typeIdController.clear();
-    idController.clear();
   }
 
   @override

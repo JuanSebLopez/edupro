@@ -5,10 +5,10 @@ class QuestionsPage extends StatefulWidget {
   const QuestionsPage({super.key});
 
   @override
-  _QuestionsPageState createState() => _QuestionsPageState();
+  QuestionsPageState createState() => QuestionsPageState();
 }
 
-class _QuestionsPageState extends State<QuestionsPage> {
+class QuestionsPageState extends State<QuestionsPage> {
   final TextEditingController _controller1 = TextEditingController();
   final TextEditingController _controller2 = TextEditingController();
   final TextEditingController _controller3 = TextEditingController();
@@ -261,12 +261,12 @@ class _QuestionsPageState extends State<QuestionsPage> {
                         });
 
                         // Mostrar la información de la pregunta por consola
-                        print("Nueva pregunta registrada:");
-                        print("Materia: $subject");
-                        print("Pregunta: $question");
-                        print(
-                            "Respuestas: $answerA, $answerB, $answerC, $answerD");
-                        print("Respuesta correcta: $correctAnswer");
+                        //print("Nueva pregunta registrada:");
+                        //print("Materia: $subject");
+                        //print("Pregunta: $question");
+                        //print(
+                        //    "Respuestas: $answerA, $answerB, $answerC, $answerD");
+                        //print("Respuesta correcta: $correctAnswer");
 
                         // Mostrar mensaje de éxito
                         ScaffoldMessenger.of(context).showSnackBar(

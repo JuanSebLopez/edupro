@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 class StatisticsCard extends StatelessWidget {
   const StatisticsCard({
-    Key? key,
+    super.key,
     required this.title,
     required this.icon,
     required this.count,
     required this.percentage,
     required this.color,
-  }) : super(key: key);
+  });
 
   final String title;
   final IconData icon;
