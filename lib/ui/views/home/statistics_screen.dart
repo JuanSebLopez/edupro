@@ -105,5 +105,6 @@ Widget _buildCard({
     icon: icon,
     count: count,
     color: color,
+    percentage: '',
   );
 }
