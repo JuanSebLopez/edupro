@@ -1,1 +1,1 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"edupro-4821d","appId":"1:708567917575:android:e49fcb06deb6ab6c4276a2","fileOutput":"android/app/google-services.json"}}}}}
+{"flutter":{"platforms":{"android":{"default":{"projectId":"edupro-95d8d","appId":"1:591980991177:android:d78f9536f908ac16ad7318","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"edupro-95d8d","configurations":{"android":"1:591980991177:android:d78f9536f908ac16ad7318","ios":"1:591980991177:ios:d4d480a3864c1cbcad7318"}}}}}}

@@ -6,12 +6,14 @@ class StatisticsCard extends StatelessWidget {
     required this.title,
     required this.icon,
     required this.count,
+    required this.percentage,
     required this.color,
   });
 
   final String title;
   final IconData icon;
   final String count;
+  final String percentage;
   final Color color;
 
   @override
@@ -22,30 +24,41 @@ class StatisticsCard extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Icon(
-              icon,
-              size: 32.0,
-              color: color,
-            ),
-            const SizedBox(height: 16.0),
-            Text(
-              title,
-              style: TextStyle(
-                fontSize: 18.0,
-                fontWeight: FontWeight.bold,
-                color: Colors.grey[800],
-              ),
+            Row(
+              children: <Widget>[
+                Icon(
+                  icon,
+                  size: 30.0,
+                  color: color,
+                ),
+                const SizedBox(width: 3.0), // Ajusta el ancho del SizedBox
+                Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
+                    color: color,
+                  ),
+                ),
+              ],
             ),
             const SizedBox(height: 8.0),
             Text(
               count,
-              style: TextStyle(
-                fontSize: 24.0,
+              style: const TextStyle(
+                fontSize: 22.0,
                 fontWeight: FontWeight.bold,
-                color: color,
+                color: Colors.black,
+              ),
+            ),
+            const SizedBox(height: 4.0),
+            Text(
+              percentage,
+              style: TextStyle(
+                fontSize: 14.0,
+                color: color.withOpacity(0.6),
               ),
             ),
           ],

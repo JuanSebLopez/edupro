@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -19,34 +20,44 @@ class _HomePageState extends State<HomePage> {
           Container(
             margin: const EdgeInsets.all(
                 4.0), // Ajusta el margen alrededor de la imagen
-            child: Image.asset('ImgHome1Png.png'),
+            child: Image.asset('background_home.png'),
           ),
           Column(
             children: [
               RichText(
-                text: const TextSpan(
+                text: TextSpan(
                   children: [
                     TextSpan(
                       text: 'Edu',
-                      style: TextStyle(
-                        fontSize: 64,
-                        color: Colors.blue, // Color para la parte "Edu"
+                      style: GoogleFonts.loveYaLikeASister(
+                        textStyle: const TextStyle(
+                          fontSize: 64,
+                          color: Colors.blue,
+                        ),
                       ),
                     ),
                     TextSpan(
                       text: 'Pro',
-                      style: TextStyle(
-                        fontSize: 64,
-                        color: Colors.green, // Color para la parte "Pro"
+                      style: GoogleFonts.loveYaLikeASister(
+                        textStyle: const TextStyle(
+                          fontSize: 64,
+                          color: Colors.green,
+                        ),
                       ),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(height: 20), // Espacio entre los elementos
-              const Text(
-                'Encuentra los mejores cuestionarios para tu desempeño en las pruebas saber Pro.',
-                style: TextStyle(fontSize: 20),
+              Text(
+                'Find the best quizzes for your performance on the Saber Pro tests.',
+                style: GoogleFonts.loveYaLikeASister(
+                  textStyle: const TextStyle(
+                    fontSize: 20,
+                    color: Colors
+                        .black87, // Cambia el color del texto a un negro más oscuro
+                    fontWeight: FontWeight.w500, // Agrega grosor al texto
+                  ),
+                ),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 15),
@@ -56,17 +67,23 @@ class _HomePageState extends State<HomePage> {
                   Get.toNamed('/register');
                 },
                 style: ElevatedButton.styleFrom(
-                  minimumSize: const Size(270, 51), //Tamaño del boton (w, h)
+                  minimumSize: const Size(270, 51), // Tamaño del botón (w, h)
                   backgroundColor:
                       const Color(0xFF204F95), // Color de fondo del botón
                   shape: RoundedRectangleBorder(
                     borderRadius:
                         BorderRadius.circular(10), // Radio de la esquina
                   ), // Tamaño mínimo del botón
+                  shadowColor: Colors.black
+                      .withOpacity(1), // Color y opacidad de la sombra
+                  elevation: 5, // Altura de la sombra
                 ),
                 child: const Text(
-                  'Regístrate',
-                  style: TextStyle(color: Colors.white), //Color blanco al texto
+                  'Sign Up',
+                  style: TextStyle(
+                    color: Colors.white, // Color blanco al texto
+                    fontWeight: FontWeight.bold, // Agrega grosor al texto
+                  ),
                 ),
               ),
               const SizedBox(height: 10),
@@ -79,14 +96,15 @@ class _HomePageState extends State<HomePage> {
                   backgroundColor:
                       Colors.transparent, // Color de fondo transparente
                   elevation:
-                      0, // Sin sombra, con esto el boton se vuelve de verdad transparente
+                      0, // Sin sombra, con esto el botón se vuelve de verdad transparente
                   shadowColor:
                       Colors.transparent, // Color de sombra transparente
                 ),
                 child: const Text(
-                  'Inicia sesión',
+                  'Sign In',
                   style: TextStyle(
                     color: Color(0xFF204F95), // Color del texto
+                    fontWeight: FontWeight.bold, // Agrega grosor al texto
                   ),
                 ),
               )
@@ -95,7 +113,7 @@ class _HomePageState extends State<HomePage> {
           Container(
             margin: const EdgeInsets.all(
                 4.0), // Ajusta el margen alrededor de la imagen
-            child: Image.asset('ImgHome2Png.png'),
+            child: Image.asset('app_logo.png'),
           ),
         ],
       ),

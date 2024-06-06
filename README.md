@@ -1,15 +1,33 @@
-## Prod
+# edupro
 
-Es importante que en cada paso si tienes VSC o AS abierto es posible que se requiera reiniciar el IDE para que se efectuen los cambios, como algunos comandos del paso 7.
+-- Descripcion Aplicación --
 
-1. Descargar Java JDK 17 y agregarlo al path del sistema (carpeta bin) y una nueva variable llamada ```JAVA_HOME``` que apunte a la carpeta "C:...\Java\jdk-17".
-2. Descargar Android Studio, y añadir el plugin de Android toolchain para las licencias (Ejecuta en consola el comando ```flutter doctor``` y te mostrara lo que falta para ejecutar flutter, el que no es necesario es el Visual Studio - develop windows apps).
-3. (Opcional) Activar la virtualizacion desde la BIOs (si no esta activada) para poder agregar un emulador de android  con Andorid Studio en la pestaña de configuracion de Virtual Device Manager (VDC), tamaño Pixel XL.
-4. Abierto el repo, ejecuta flutter pub get para las dependencias
+## Getting Started
 
-5. Revisa que en la ca<https://www.youtube.com/watch?v=nqAIz7Pkbp0&t=680s>ngs.gradle, build.gradle y local.properties
+Para comenzar con este proyecto, siga estos pasos:
 
-6. Cambiar el nombre del package en la terminal del repo con la libreria change_app_package_name asi:
-```flutter pub run change_app_package_name:main com.unicesar.edupro```
+1. **Instalar Flutter**: Si aún no lo has hecho, [instalar Flutter](https://flutter.dev/docs/get-started/install) de la página web oficial.
 
-7. Ver este tutorial  para tener FlutterFire CLI (Completo, al final del video aclara una cosa) <https://www.youtube.com/watch?v=nqAIz7Pkbp0&t=680s>.
+2. **Clona el Proyecto**: Descargue o clone este repositorio y ábralo en su IDE preferido, preferiblemente Visual Studio Code.
+
+3. **Instalar Dependenciass**: Abra una terminal dentro del directorio de su proyecto y ejecute el siguiente comando para instalar todas las dependencias:
+    ```flutter pub get```
+
+4. **Instalar Firebase CLI**: Si no ha instalado Firebase CLI [instalar Firebase CLI](https://firebase.google.com/docs/cli?hl=en#windows-npm), ejecute el siguiente comando para instalar firebase-tools en su dispositivo:
+    ```npm install -g firebase-tools```
+
+5. **Iniciar Sesión Firebase**: En la misma terminal ejecute el siguiente comando para iniciar sesión con su cuenta de Google vinculada al proyecto:
+    ```firebase login```
+
+6. **Activar FlutterFire CLI**: Abra la terminal del directorio de su proyecto y ejecute el siguiente comando para inicialiar FlutterFire CLI en el proyecto:
+    ```dart pub global activate flutterfire_cli```
+
+7. **Configuar FlutterFire**: En la terminal del directorio ejecute el siguiente comando para configurar FlutterFire (Seleccione el proyecto actual):
+    ```flutterfire configure```
+
+8. **Selecciona Plataformas**: Después de ejecutar ```flutterfire configure``` aparecerán opciones para las plataformas que desee la aplicación, selecciona android e ios principalmente (Si necesita usar una plataforma distinta hacerlo desde otra rama).
+
+9. **Configurar Gradle**: Luego, deberá aceptar ambas configuraciones de Firebase para Gradle.
+
+10. **Ejecuta la Aplicación**: Finalmente ejecute el siguiente comando para correr la aplicación:
+    ```flutter run```

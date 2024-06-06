@@ -7,21 +7,25 @@ class NavigationBarWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final currentRoute = ModalRoute.of(context)?.settings.name;
     return BottomNavigationBar(
+      backgroundColor: const Color(0xFFEFEFEF), // Color de fondo personalizado
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
-          icon: Icon(Icons.trending_up),
-          label: 'Estadisticas',
+          icon: Icon(Icons.trending_up,
+              color: Color(0xFF0C549C)), // Color del icono personalizado
+          label: 'Estatistics', // Etiqueta vacía
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: 'Inicio',
+          icon: Icon(Icons.home,
+              color: Color(0xFF0C549C)), // Color del icono personalizado
+          label: 'Home', // Etiqueta vacía
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.person_2),
-          label: 'Perfil',
+          icon: Icon(Icons.person,
+              color: Color(0xFF0C549C)), // Color del icono personalizado
+          label: 'Profile', // Etiqueta vacía
         ),
       ],
-      currentIndex: currentRoute == '/homeScreen' ? 1 : 0,
+      currentIndex: _getCurrentIndex(currentRoute),
       onTap: (int index) {
         // Handle navigation to the selected page
         switch (index) {
@@ -37,5 +41,15 @@ class NavigationBarWidget extends StatelessWidget {
         }
       },
     );
+  }
+
+  int _getCurrentIndex(String? currentRoute) {
+    if (currentRoute == '/statistics') {
+      return 0;
+    } else if (currentRoute == '/homeScreen') {
+      return 1;
+    } else {
+      return 2;
+    }
   }
 }

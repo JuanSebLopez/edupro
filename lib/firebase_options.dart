@@ -17,7 +17,10 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -25,9 +28,15 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
-        return windows;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for windows - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -40,55 +49,20 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyA5qd9-ULz2xYaVx4CX_0L1i8nQmhnGB7k',
-    appId: '1:727905531405:web:5d5439c700ab3df92fc744',
-    messagingSenderId: '727905531405',
-    projectId: 'edupro-45bb5',
-    authDomain: 'edupro-45bb5.firebaseapp.com',
-    databaseURL: 'https://edupro-45bb5-default-rtdb.firebaseio.com',
-    storageBucket: 'edupro-45bb5.appspot.com',
-    measurementId: 'G-LQ2REXM0KM',
-  );
-
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDq50hLcg97qlXvaU-R1CuZDOGaR0onJhQ',
-    appId: '1:727905531405:android:abdab548d4be5de72fc744',
-    messagingSenderId: '727905531405',
-    projectId: 'edupro-45bb5',
-    databaseURL: 'https://edupro-45bb5-default-rtdb.firebaseio.com',
-    storageBucket: 'edupro-45bb5.appspot.com',
+    apiKey: 'AIzaSyDvWlleR1z99gtdmMClBI8kSglJi5w9HAs',
+    appId: '1:591980991177:android:d78f9536f908ac16ad7318',
+    messagingSenderId: '591980991177',
+    projectId: 'edupro-95d8d',
+    storageBucket: 'edupro-95d8d.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCflZC3nyik37bTFabowyAkSeGW4DF4cJ4',
-    appId: '1:727905531405:ios:c6e5eb84bb027c222fc744',
-    messagingSenderId: '727905531405',
-    projectId: 'edupro-45bb5',
-    databaseURL: 'https://edupro-45bb5-default-rtdb.firebaseio.com',
-    storageBucket: 'edupro-45bb5.appspot.com',
+    apiKey: 'AIzaSyCSMIaEtXyMysN25U3B6wGMNUyVpMtYe68',
+    appId: '1:591980991177:ios:d4d480a3864c1cbcad7318',
+    messagingSenderId: '591980991177',
+    projectId: 'edupro-95d8d',
+    storageBucket: 'edupro-95d8d.appspot.com',
     iosBundleId: 'com.example.edupro',
   );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyCflZC3nyik37bTFabowyAkSeGW4DF4cJ4',
-    appId: '1:727905531405:ios:c6e5eb84bb027c222fc744',
-    messagingSenderId: '727905531405',
-    projectId: 'edupro-45bb5',
-    databaseURL: 'https://edupro-45bb5-default-rtdb.firebaseio.com',
-    storageBucket: 'edupro-45bb5.appspot.com',
-    iosBundleId: 'com.example.edupro',
-  );
-
-  static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyA5qd9-ULz2xYaVx4CX_0L1i8nQmhnGB7k',
-    appId: '1:727905531405:web:432156b621fa55a62fc744',
-    messagingSenderId: '727905531405',
-    projectId: 'edupro-45bb5',
-    authDomain: 'edupro-45bb5.firebaseapp.com',
-    databaseURL: 'https://edupro-45bb5-default-rtdb.firebaseio.com',
-    storageBucket: 'edupro-45bb5.appspot.com',
-    measurementId: 'G-7KKE191X8L',
-  );
-
 }
