@@ -1,0 +1,172 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.example.edupro"
+4    android:versionCode="1"
+5    android:versionName="1.0.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="19"
+9        android:targetSdkVersion="33" />
+10    <!--
+11         The INTERNET permission is required for development. Specifically,
+12         the Flutter tool needs it to communicate with the running application
+13         to allow setting breakpoints, to provide hot reload, etc.
+14    -->
+15    <uses-permission android:name="android.permission.INTERNET" />
+15-->C:\Users\Kadir\OneDrive\Escritorio\edupro\android\app\src\debug\AndroidManifest.xml:6:5-66
+15-->C:\Users\Kadir\OneDrive\Escritorio\edupro\android\app\src\debug\AndroidManifest.xml:6:22-64
+16    <!--
+17     Required to query activities that can process text, see:
+18         https://developer.android.com/training/package-visibility?hl=en and
+19         https://developer.android.com/reference/android/content/Intent#ACTION_PROCESS_TEXT.
+20
+21         In particular, this is used by the Flutter engine in io.flutter.plugin.text.ProcessTextPlugin.
+22    -->
+23    <queries>
+23-->C:\Users\Kadir\OneDrive\Escritorio\edupro\android\app\src\main\AndroidManifest.xml:38:5-43:15
+24        <intent>
+24-->C:\Users\Kadir\OneDrive\Escritorio\edupro\android\app\src\main\AndroidManifest.xml:39:9-42:18
+25            <action android:name="android.intent.action.PROCESS_TEXT" />
+25-->C:\Users\Kadir\OneDrive\Escritorio\edupro\android\app\src\main\AndroidManifest.xml:40:13-72
+25-->C:\Users\Kadir\OneDrive\Escritorio\edupro\android\app\src\main\AndroidManifest.xml:40:21-70
+26
+27            <data android:mimeType="text/plain" />
+27-->C:\Users\Kadir\OneDrive\Escritorio\edupro\android\app\src\main\AndroidManifest.xml:41:13-50
+27-->C:\Users\Kadir\OneDrive\Escritorio\edupro\android\app\src\main\AndroidManifest.xml:41:19-48
+28        </intent>
+29    </queries> <!-- Although the *SdkVersion is captured in gradle build files, this is required for non gradle builds -->
+30    <!-- <uses-sdk android:minSdkVersion="14" /> -->
+31    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+31-->[com.google.firebase:firebase-firestore:24.11.0] C:\Users\Kadir\.gradle\caches\transforms-3\52ec130332287cc38e999865e5e01dfd\transformed\jetified-firebase-firestore-24.11.0\AndroidManifest.xml:10:5-79
+31-->[com.google.firebase:firebase-firestore:24.11.0] C:\Users\Kadir\.gradle\caches\transforms-3\52ec130332287cc38e999865e5e01dfd\transformed\jetified-firebase-firestore-24.11.0\AndroidManifest.xml:10:22-76
+32
+33    <application
+34        android:name="android.app.Application"
+35        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+35-->[androidx.core:core:1.6.0] C:\Users\Kadir\.gradle\caches\transforms-3\974b4f2252348b5ef43741b27d416a49\transformed\core-1.6.0\AndroidManifest.xml:24:18-86
+36        android:debuggable="true"
+37        android:icon="@mipmap/ic_launcher"
+38        android:label="edupro" >
+39        <activity
+40            android:name="com.example.edupro.MainActivity"
+41            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+42            android:exported="true"
+43            android:hardwareAccelerated="true"
+44            android:launchMode="singleTop"
+45            android:theme="@style/LaunchTheme"
+46            android:windowSoftInputMode="adjustResize" >
+47
+48            <!--
+49                 Specifies an Android theme to apply to this Activity as soon as
+50                 the Android process has started. This theme is visible to the user
+51                 while the Flutter UI initializes. After that, this theme continues
+52                 to determine the Window background behind the Flutter UI.
+53            -->
+54            <meta-data
+55                android:name="io.flutter.embedding.android.NormalTheme"
+56                android:resource="@style/NormalTheme" />
+57
+58            <intent-filter>
+59                <action android:name="android.intent.action.MAIN" />
+60
+61                <category android:name="android.intent.category.LAUNCHER" />
+62            </intent-filter>
+63        </activity>
+64        <!--
+65             Don't delete the meta-data below.
+66             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
+67        -->
+68        <meta-data
+69            android:name="flutterEmbedding"
+70            android:value="2" />
+71
+72        <service
+72-->[:cloud_firestore] C:\Users\Kadir\OneDrive\Escritorio\edupro\build\cloud_firestore\intermediates\merged_manifest\debug\AndroidManifest.xml:10:9-14:19
+73            android:name="com.google.firebase.components.ComponentDiscoveryService"
+73-->[:cloud_firestore] C:\Users\Kadir\OneDrive\Escritorio\edupro\build\cloud_firestore\intermediates\merged_manifest\debug\AndroidManifest.xml:10:18-89
+74            android:directBootAware="true"
+74-->[com.google.firebase:firebase-common:20.4.3] C:\Users\Kadir\.gradle\caches\transforms-3\fd22878c3543e1218ec5eda14573d2ac\transformed\jetified-firebase-common-20.4.3\AndroidManifest.xml:32:13-43
+75            android:exported="false" >
+75-->[com.google.firebase:firebase-firestore:24.11.0] C:\Users\Kadir\.gradle\caches\transforms-3\52ec130332287cc38e999865e5e01dfd\transformed\jetified-firebase-firestore-24.11.0\AndroidManifest.xml:16:13-37
+76            <meta-data
+76-->[:cloud_firestore] C:\Users\Kadir\OneDrive\Escritorio\edupro\build\cloud_firestore\intermediates\merged_manifest\debug\AndroidManifest.xml:11:13-13:85
+77                android:name="com.google.firebase.components:io.flutter.plugins.firebase.firestore.FlutterFirebaseFirestoreRegistrar"
+77-->[:cloud_firestore] C:\Users\Kadir\OneDrive\Escritorio\edupro\build\cloud_firestore\intermediates\merged_manifest\debug\AndroidManifest.xml:12:17-134
+78                android:value="com.google.firebase.components.ComponentRegistrar" />
+78-->[:cloud_firestore] C:\Users\Kadir\OneDrive\Escritorio\edupro\build\cloud_firestore\intermediates\merged_manifest\debug\AndroidManifest.xml:13:17-82
+79            <meta-data
+79-->[:firebase_core] C:\Users\Kadir\OneDrive\Escritorio\edupro\build\firebase_core\intermediates\merged_manifest\debug\AndroidManifest.xml:11:13-13:85
+80                android:name="com.google.firebase.components:io.flutter.plugins.firebase.core.FlutterFirebaseCoreRegistrar"
+80-->[:firebase_core] C:\Users\Kadir\OneDrive\Escritorio\edupro\build\firebase_core\intermediates\merged_manifest\debug\AndroidManifest.xml:12:17-124
+81                android:value="com.google.firebase.components.ComponentRegistrar" />
+81-->[:firebase_core] C:\Users\Kadir\OneDrive\Escritorio\edupro\build\firebase_core\intermediates\merged_manifest\debug\AndroidManifest.xml:13:17-82
+82            <meta-data
+82-->[com.google.firebase:firebase-firestore:24.11.0] C:\Users\Kadir\.gradle\caches\transforms-3\52ec130332287cc38e999865e5e01dfd\transformed\jetified-firebase-firestore-24.11.0\AndroidManifest.xml:17:13-19:85
+83                android:name="com.google.firebase.components:com.google.firebase.firestore.FirebaseFirestoreKtxRegistrar"
+83-->[com.google.firebase:firebase-firestore:24.11.0] C:\Users\Kadir\.gradle\caches\transforms-3\52ec130332287cc38e999865e5e01dfd\transformed\jetified-firebase-firestore-24.11.0\AndroidManifest.xml:18:17-122
+84                android:value="com.google.firebase.components.ComponentRegistrar" />
+84-->[com.google.firebase:firebase-firestore:24.11.0] C:\Users\Kadir\.gradle\caches\transforms-3\52ec130332287cc38e999865e5e01dfd\transformed\jetified-firebase-firestore-24.11.0\AndroidManifest.xml:19:17-82
+85            <meta-data
+85-->[com.google.firebase:firebase-firestore:24.11.0] C:\Users\Kadir\.gradle\caches\transforms-3\52ec130332287cc38e999865e5e01dfd\transformed\jetified-firebase-firestore-24.11.0\AndroidManifest.xml:20:13-22:85
+86                android:name="com.google.firebase.components:com.google.firebase.firestore.FirestoreRegistrar"
+86-->[com.google.firebase:firebase-firestore:24.11.0] C:\Users\Kadir\.gradle\caches\transforms-3\52ec130332287cc38e999865e5e01dfd\transformed\jetified-firebase-firestore-24.11.0\AndroidManifest.xml:21:17-111
+87                android:value="com.google.firebase.components.ComponentRegistrar" />
+87-->[com.google.firebase:firebase-firestore:24.11.0] C:\Users\Kadir\.gradle\caches\transforms-3\52ec130332287cc38e999865e5e01dfd\transformed\jetified-firebase-firestore-24.11.0\AndroidManifest.xml:22:17-82
+88            <meta-data
+88-->[com.google.firebase:firebase-common-ktx:20.4.3] C:\Users\Kadir\.gradle\caches\transforms-3\f33e1bb3e48b579cf1c80fcd1f38f176\transformed\jetified-firebase-common-ktx-20.4.3\AndroidManifest.xml:12:13-14:85
+89                android:name="com.google.firebase.components:com.google.firebase.ktx.FirebaseCommonLegacyRegistrar"
+89-->[com.google.firebase:firebase-common-ktx:20.4.3] C:\Users\Kadir\.gradle\caches\transforms-3\f33e1bb3e48b579cf1c80fcd1f38f176\transformed\jetified-firebase-common-ktx-20.4.3\AndroidManifest.xml:13:17-116
+90                android:value="com.google.firebase.components.ComponentRegistrar" />
+90-->[com.google.firebase:firebase-common-ktx:20.4.3] C:\Users\Kadir\.gradle\caches\transforms-3\f33e1bb3e48b579cf1c80fcd1f38f176\transformed\jetified-firebase-common-ktx-20.4.3\AndroidManifest.xml:14:17-82
+91            <meta-data
+91-->[com.google.firebase:firebase-common:20.4.3] C:\Users\Kadir\.gradle\caches\transforms-3\fd22878c3543e1218ec5eda14573d2ac\transformed\jetified-firebase-common-20.4.3\AndroidManifest.xml:35:13-37:85
+92                android:name="com.google.firebase.components:com.google.firebase.FirebaseCommonKtxRegistrar"
+92-->[com.google.firebase:firebase-common:20.4.3] C:\Users\Kadir\.gradle\caches\transforms-3\fd22878c3543e1218ec5eda14573d2ac\transformed\jetified-firebase-common-20.4.3\AndroidManifest.xml:36:17-109
+93                android:value="com.google.firebase.components.ComponentRegistrar" />
+93-->[com.google.firebase:firebase-common:20.4.3] C:\Users\Kadir\.gradle\caches\transforms-3\fd22878c3543e1218ec5eda14573d2ac\transformed\jetified-firebase-common-20.4.3\AndroidManifest.xml:37:17-82
+94        </service>
+95
+96        <provider
+96-->[com.google.firebase:firebase-common:20.4.3] C:\Users\Kadir\.gradle\caches\transforms-3\fd22878c3543e1218ec5eda14573d2ac\transformed\jetified-firebase-common-20.4.3\AndroidManifest.xml:23:9-28:39
+97            android:name="com.google.firebase.provider.FirebaseInitProvider"
+97-->[com.google.firebase:firebase-common:20.4.3] C:\Users\Kadir\.gradle\caches\transforms-3\fd22878c3543e1218ec5eda14573d2ac\transformed\jetified-firebase-common-20.4.3\AndroidManifest.xml:24:13-77
+98            android:authorities="com.example.edupro.firebaseinitprovider"
+98-->[com.google.firebase:firebase-common:20.4.3] C:\Users\Kadir\.gradle\caches\transforms-3\fd22878c3543e1218ec5eda14573d2ac\transformed\jetified-firebase-common-20.4.3\AndroidManifest.xml:25:13-72
+99            android:directBootAware="true"
+99-->[com.google.firebase:firebase-common:20.4.3] C:\Users\Kadir\.gradle\caches\transforms-3\fd22878c3543e1218ec5eda14573d2ac\transformed\jetified-firebase-common-20.4.3\AndroidManifest.xml:26:13-43
+100            android:exported="false"
+100-->[com.google.firebase:firebase-common:20.4.3] C:\Users\Kadir\.gradle\caches\transforms-3\fd22878c3543e1218ec5eda14573d2ac\transformed\jetified-firebase-common-20.4.3\AndroidManifest.xml:27:13-37
+101            android:initOrder="100" />
+101-->[com.google.firebase:firebase-common:20.4.3] C:\Users\Kadir\.gradle\caches\transforms-3\fd22878c3543e1218ec5eda14573d2ac\transformed\jetified-firebase-common-20.4.3\AndroidManifest.xml:28:13-36
+102
+103        <uses-library
+103-->[androidx.window:window:1.0.0-beta04] C:\Users\Kadir\.gradle\caches\transforms-3\6582e67aea0be70979c64a0bfb01e347\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:25:9-27:40
+104            android:name="androidx.window.extensions"
+104-->[androidx.window:window:1.0.0-beta04] C:\Users\Kadir\.gradle\caches\transforms-3\6582e67aea0be70979c64a0bfb01e347\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:26:13-54
+105            android:required="false" />
+105-->[androidx.window:window:1.0.0-beta04] C:\Users\Kadir\.gradle\caches\transforms-3\6582e67aea0be70979c64a0bfb01e347\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:27:13-37
+106        <uses-library
+106-->[androidx.window:window:1.0.0-beta04] C:\Users\Kadir\.gradle\caches\transforms-3\6582e67aea0be70979c64a0bfb01e347\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:28:9-30:40
+107            android:name="androidx.window.sidecar"
+107-->[androidx.window:window:1.0.0-beta04] C:\Users\Kadir\.gradle\caches\transforms-3\6582e67aea0be70979c64a0bfb01e347\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:29:13-51
+108            android:required="false" />
+108-->[androidx.window:window:1.0.0-beta04] C:\Users\Kadir\.gradle\caches\transforms-3\6582e67aea0be70979c64a0bfb01e347\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:30:13-37
+109
+110        <activity
+110-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\Kadir\.gradle\caches\transforms-3\90c13308e55cdc7ad3125decdeb4307c\transformed\jetified-play-services-base-18.0.1\AndroidManifest.xml:20:9-22:45
+111            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+111-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\Kadir\.gradle\caches\transforms-3\90c13308e55cdc7ad3125decdeb4307c\transformed\jetified-play-services-base-18.0.1\AndroidManifest.xml:20:19-85
+112            android:exported="false"
+112-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\Kadir\.gradle\caches\transforms-3\90c13308e55cdc7ad3125decdeb4307c\transformed\jetified-play-services-base-18.0.1\AndroidManifest.xml:22:19-43
+113            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+113-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\Kadir\.gradle\caches\transforms-3\90c13308e55cdc7ad3125decdeb4307c\transformed\jetified-play-services-base-18.0.1\AndroidManifest.xml:21:19-78
+114
+115        <meta-data
+115-->[com.google.android.gms:play-services-basement:18.3.0] C:\Users\Kadir\.gradle\caches\transforms-3\4105637ca2d0ffd34d30b1a01003cfea\transformed\jetified-play-services-basement-18.3.0\AndroidManifest.xml:21:9-23:69
+116            android:name="com.google.android.gms.version"
+116-->[com.google.android.gms:play-services-basement:18.3.0] C:\Users\Kadir\.gradle\caches\transforms-3\4105637ca2d0ffd34d30b1a01003cfea\transformed\jetified-play-services-basement-18.3.0\AndroidManifest.xml:22:13-58
+117            android:value="@integer/google_play_services_version" />
+117-->[com.google.android.gms:play-services-basement:18.3.0] C:\Users\Kadir\.gradle\caches\transforms-3\4105637ca2d0ffd34d30b1a01003cfea\transformed\jetified-play-services-basement-18.3.0\AndroidManifest.xml:23:13-66
+118    </application>
+119
+120</manifest>

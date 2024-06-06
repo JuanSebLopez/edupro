@@ -1,0 +1,66 @@
+{
+   "checksum": "1706ab96ae9f191f9e40234261542e5c",
+   "roots": {
+      "bookmark_bar": {
+         "children": [ {
+            "date_added": "13344666362285761",
+            "date_last_used": "0",
+            "guid": "ed5489b1-26ab-42ef-98a9-713c3d763e17",
+            "id": "7",
+            "meta_info": {
+               "power_bookmark_meta": ""
+            },
+            "name": "(12) BIYIN EXPUESTA y ACUSADA de PLAGIO con SU MARCA de ROPA y XOKAS deja EXPUESTOS a PRESIDENTES de KL - YouTube",
+            "show_icon": false,
+            "source": "sync",
+            "type": "url",
+            "url": "https://www.youtube.com/watch?v=MCT6tooH6Dg"
+         }, {
+            "date_added": "13352909471597122",
+            "date_last_used": "0",
+            "guid": "1480e727-7950-483f-87d3-5ab2b7417594",
+            "id": "8",
+            "meta_info": {
+               "power_bookmark_meta": ""
+            },
+            "name": "Notion universidad",
+            "show_icon": false,
+            "source": "sync",
+            "type": "url",
+            "url": "https://www.notion.so/S-ptimo-semestre-18be0ef87aa641a28a68cea6fba092a7"
+         } ],
+         "date_added": "13362145603470061",
+         "date_last_used": "0",
+         "date_modified": "13352909471597122",
+         "guid": "0bc5d13f-2cba-5d74-951f-3f233fe6c908",
+         "id": "1",
+         "name": "Barra de favoritos",
+         "source": "unknown",
+         "type": "folder"
+      },
+      "other": {
+         "children": [  ],
+         "date_added": "13362145603470067",
+         "date_last_used": "0",
+         "date_modified": "0",
+         "guid": "82b081ec-3dd3-529c-8475-ab6c344590dd",
+         "id": "2",
+         "name": "Otros favoritos",
+         "source": "unknown",
+         "type": "folder"
+      },
+      "synced": {
+         "children": [  ],
+         "date_added": "13362145603470072",
+         "date_last_used": "0",
+         "date_modified": "0",
+         "guid": "4cf2e351-0e85-532b-bb37-df045d8f8d0f",
+         "id": "3",
+         "name": "Favoritos móviles",
+         "source": "unknown",
+         "type": "folder"
+      }
+   },
+   "sync_metadata": "CjEKDgiIgQISCAj2Ou2PAQAAEgAqGCtZMG1vYXZCSWc0T280ZVhMblEwQ1E9PUgDoAYMEqgBCAgSowEKHE85Vk51V2Z2eUp1R2RMYjNFb243Q0NQRGcxRT0SJDE0ODBlNzI3LTc5NTAtNDgzZi04N2QzLTVhYjJiNzQxNzU5NBgAIAAoADDa3uvh8DE4p7jatdwxQKe42rXcMUocQ0tDMmVzVERkK3ZtdGRUNjgvWWZkNG55N0w0PVofIh2qSUVLVEVYaGNGdjhUN2U5YTFiUXFTL25WSDg4PWXM8kkeEqcBCAcSogEKHFVmMWhQRjJmU01HQXVDTUx0ZDB3emdtNFd0ND0SJGVkNTQ4OWIxLTI2YWItNDJlZi05OGE5LTcxM2MzZDc2M2UxNxgAIAAoADC/nPfe8DE4pf+K270xQKX/itu9MUocMnBjcnZBZEtkNUtQemZLTHN6SDJoV25BOTZnPVoeIhxVOXV5VFp6U2RFYTF5NzRzRU4xWTQyRUo1Mmc9ZTj5OTMSiQEIARKEAQoceXhKLzZmdmtlY3I3a3A1RVF6QjR0V0xwZGJFPRIkZTc2NjJjYTYtNjFjMi01NGM1LWFlZjYtMjhhOTgyMjFiMzE3GAAgACgAMMOimcOyMDi98ce/+i9AvfHHv/ovShxhUkNXTGdoRjliNUlucUtJRHZ1Si9qdlFrRmM9WgBlAAAAABKJAQgCEoQBChxZY1NUb252RVNQd3FDczRMMmNyVmh2NjhMOTg9EiRiOWMwYTE2YS04NzlhLTUzYWItYTFhNy02YWVhZWY3NWIxNGMYACAAKAAww6KZw7IwONzxx7/6L0Dc8ce/+i9KHG9QVmtod0JSYlY2NUtDV1IyK0lPTkhXb091OD1aAGUAAAAAEokBCAMShAEKHG5qZ0R1ODhlQ3J2WHA4NnBEN2ZIR2NxRnA4OD0SJDhhYjgxZGM2LThiN2EtNTNjOS1hMTBhLWExNDJhMThmYjYyNRgAIAAoADDDopnDsjA4q/LHv/ovQKvyx7/6L0oceXpOQjAxY241NEE3Y1JVMHVUKy9QZ21UdFVvPVoAZQAAAAAwADgA",
+   "version": 1
+}
