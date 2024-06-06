@@ -12,7 +12,7 @@ class StatisticsPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Image.asset(
-            'ImgHome2Png.png',
+            'assets/images/app_logo.png',
             fit: BoxFit.cover,
           ),
           const SizedBox(height: 20.0), // Espacio entre la imagen y los textos
@@ -21,7 +21,7 @@ class StatisticsPage extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: 30.0,
-                backgroundImage: AssetImage('michael7.jpg'),
+                backgroundImage: AssetImage('assets/images/michael.jpg'),
               ),
               SizedBox(width: 16.0), // Espacio entre la imagen y el texto
               Column(

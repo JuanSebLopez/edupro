@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:edupro/services/questionary_service.dart';
 import 'package:edupro/shared/widgets/nav/navigation_bar.dart';
-import 'package:edupro/shared/widgets/nav/modules.dart';
+import 'add_questionary_screen.dart';
 
 class HomeScreenPage extends StatefulWidget {
   const HomeScreenPage({super.key});
@@ -11,53 +12,63 @@ class HomeScreenPage extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreenPage> {
-  final List<Color> _colors = [
-    const Color(0xFF204F95), // Azul
-    const Color(0xFF33B958), // Verde
-    const Color(0xFF0C549C), // Azul oscuro
-  ];
-  int _colorIndex = 0;
+  final QuestionaryService _questionaryService = QuestionaryService();
+  Map<String, List<Map<String, dynamic>>> _competenceQuestionaries = {};
+  bool _isLoading = true;
 
-  final List<bool> _isExpandedList = List.generate(15, (index) => false);
-
-  Color _getNextColor() {
-    final color = _colors[_colorIndex];
-    _colorIndex = (_colorIndex + 1) % _colors.length;
-    return color;
+  @override
+  void initState() {
+    super.initState();
+    _fetchQuestionaries();
   }
 
-  Color _getTextColor(Color backgroundColor) {
-    // Verificar si el color de fondo es verde o azul oscuro
-    if (backgroundColor == const Color(0xFF33B958) ||
-        backgroundColor == const Color(0xFF0C549C)) {
-      // Si el color de fondo es verde o azul oscuro, devolvemos un color negro
-      return Colors.black;
-    } else {
-      // De lo contrario, devolvemos un color blanco para otros colores de fondo
-      return Colors.white;
+  Future<void> _fetchQuestionaries() async {
+    List<Map<String, dynamic>> questionaries =
+        await _questionaryService.fetchQuestionaries();
+    Map<String, List<Map<String, dynamic>>> competenceQuestionaries = {};
+
+    for (var questionary in questionaries) {
+      final competence = questionary['proficiency'];
+      if (!competenceQuestionaries.containsKey(competence)) {
+        competenceQuestionaries[competence] = [];
+      }
+      competenceQuestionaries[competence]!.add(questionary);
     }
+
+    setState(() {
+      _competenceQuestionaries = competenceQuestionaries;
+      _isLoading = false;
+    });
   }
 
-  Widget _buildModule(String title, int index) {
-    final color = _getNextColor();
-    final textColor = _getTextColor(color);
-
-    return Padding(
-      padding: EdgeInsets.only(
-        top: _isExpandedList[index] ? 0.0 : 8.0,
-        bottom: _isExpandedList[index] ? 8.0 : 0.0,
+  Widget _buildCompetenceCard(
+      String competence, List<Map<String, dynamic>> questionaries) {
+    return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15.0),
       ),
-      child: ModuleCard(
-        title: title,
-        porcentage: '75%',
-        color: color,
-        width: 300,
-        onExpand: () {
-          setState(() {
-            _isExpandedList[index] = !_isExpandedList[index];
-          });
-        },
-        textColor: textColor,
+      elevation: 5,
+      margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+      child: ExpansionTile(
+        leading: Icon(Icons.book, color: Theme.of(context).primaryColor),
+        title: Text(competence,
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+        children: questionaries.map((questionary) {
+          return ListTile(
+            title: Text(questionary['name']),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => QuestionaryDetailScreen(
+                    questionaryId: questionary['id'],
+                    questionaryName: questionary['name'],
+                  ),
+                ),
+              );
+            },
+          );
+        }).toList(),
       ),
     );
   }
@@ -66,64 +77,46 @@ class _HomeScreenState extends State<HomeScreenPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
-        // Use a Stack to position the button on top of the content
         children: <Widget>[
-          // Your existing body content goes here
           SingleChildScrollView(
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  const SizedBox(height: 10.0),
-                  Container(
-                    margin: const EdgeInsets.all(4.0),
-                    child: Image.asset('ImgHome2Png.png'),
-                  ),
-                  const SizedBox(height: 20.0),
-                  Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: const BorderRadius.all(Radius.circular(10)),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.2),
-                          spreadRadius: 3,
-                          blurRadius: 10,
-                          offset: const Offset(0, 3),
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        _buildModule('Ingles', 0),
-                        _buildModule('Español', 1),
-                        _buildModule('Matematicas', 2),
-                        _buildModule('Programación', 3),
-                        _buildModule('Física', 4),
-                        _buildModule('Sociales', 5),
-                        _buildModule('Quimica', 6),
-                        _buildModule('Biologia', 7),
-                        _buildModule('Lectura critica', 8),
-                        _buildModule('Geometria', 9),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                ],
-              ),
+            child: Column(
+              children: <Widget>[
+                const SizedBox(height: 10.0),
+                Container(
+                  margin: const EdgeInsets.all(4.0),
+                  child: Image.asset('assets/images/app_logo.png'),
+                ),
+                const SizedBox(height: 10.0),
+                const Text(
+                  "¡Bienvenido, Usuario!",
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 20.0),
+                _isLoading
+                    ? const Center(child: CircularProgressIndicator())
+                    : Column(
+                        children:
+                            _competenceQuestionaries.keys.map((competence) {
+                          final questionaries =
+                              _competenceQuestionaries[competence]!;
+                          return _buildCompetenceCard(
+                              competence, questionaries);
+                        }).toList(),
+                      ),
+                const SizedBox(height: 80.0), // Espacio adicional para el FAB
+              ],
             ),
           ),
-
-          // Positioned widget for the "+" button
           Positioned(
-            bottom: 20, // Adjust the bottom offset as needed
-            right: 20, // Adjust the right offset as needed
+            bottom: 20,
+            right: 20,
             child: FloatingActionButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/questions');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const AddQuestionaryScreen()),
+                );
               },
               child: const Icon(Icons.add),
             ),
@@ -131,6 +124,52 @@ class _HomeScreenState extends State<HomeScreenPage> {
         ],
       ),
       bottomNavigationBar: const NavigationBarWidget(),
+    );
+  }
+}
+
+class QuestionaryDetailScreen extends StatelessWidget {
+  final String questionaryId;
+  final String questionaryName;
+
+  const QuestionaryDetailScreen(
+      {required this.questionaryId, required this.questionaryName, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(questionaryName),
+      ),
+      body: FutureBuilder<List<Map<String, dynamic>>>(
+        future: QuestionaryService().fetchQuestions(questionaryId),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (snapshot.hasError) {
+            return const Center(child: Text('Error al cargar preguntas'));
+          }
+          if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return const Center(child: Text('No hay preguntas disponibles'));
+          }
+
+          final questions = snapshot.data!;
+          return ListView.builder(
+            itemCount: questions.length,
+            itemBuilder: (context, index) {
+              final question = questions[index];
+              return ListTile(
+                title: Text(question['question']),
+                subtitle: Text('Competencia: ${question['competence']}'),
+                onTap: () {
+                  // Acción al hacer clic en una pregunta
+                },
+              );
+            },
+          );
+        },
+      ),
     );
   }
 }
