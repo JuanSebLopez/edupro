@@ -261,12 +261,12 @@ class QuestionsPageState extends State<QuestionsPage> {
                         });
 
                         // Mostrar la información de la pregunta por consola
-                        print("Nueva pregunta registrada:");
-                        print("Materia: $subject");
-                        print("Pregunta: $question");
-                        print(
-                            "Respuestas: $answerA, $answerB, $answerC, $answerD");
-                        print("Respuesta correcta: $correctAnswer");
+                        //print("Nueva pregunta registrada:");
+                        //print("Materia: $subject");
+                        //print("Pregunta: $question");
+                        //print(
+                        //    "Respuestas: $answerA, $answerB, $answerC, $answerD");
+                        //print("Respuesta correcta: $correctAnswer");
 
                         // Mostrar mensaje de éxito
                         ScaffoldMessenger.of(context).showSnackBar(

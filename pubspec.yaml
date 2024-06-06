@@ -28,10 +28,14 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/michael7.jpg
-    - assets/home.png
-    - assets/usuario.png
-    - assets/estadistica.png
+    - assets/images/michael.jpg
+    - assets/images/app_logo.png
+    - assets/images/background_home.png
+    - assets/images/home_logo.png
+    - assets/images/user_logo.png
+    - assets/images/statistics_logo.png
+    - assets/images/background_home.svg
+    - assets/images/app_logo.svg
 
 
   # fonts:

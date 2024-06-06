@@ -20,7 +20,7 @@ class _HomePageState extends State<HomePage> {
           Container(
             margin: const EdgeInsets.all(
                 4.0), // Ajusta el margen alrededor de la imagen
-            child: Image.asset('ImgHome1Png.png'),
+            child: Image.asset('background_home.png'),
           ),
           Column(
             children: [
@@ -113,7 +113,7 @@ class _HomePageState extends State<HomePage> {
           Container(
             margin: const EdgeInsets.all(
                 4.0), // Ajusta el margen alrededor de la imagen
-            child: Image.asset('ImgHome2Png.png'),
+            child: Image.asset('app_logo.png'),
           ),
         ],
       ),
