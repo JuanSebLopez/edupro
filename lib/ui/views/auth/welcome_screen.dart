@@ -20,7 +20,7 @@ class _HomePageState extends State<HomePage> {
           Container(
             margin: const EdgeInsets.all(
                 4.0), // Ajusta el margen alrededor de la imagen
-            child: Image.asset('background_home.png'),
+            child: Image.asset('assets/images/background_home.png'),
           ),
           Column(
             children: [
@@ -49,7 +49,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               Text(
-                'Find the best quizzes for your performance on the Saber Pro tests.',
+                'Encuentra las mejores pruebas para tu desempeño en las pruebas Sabre Pro.',
                 style: GoogleFonts.loveYaLikeASister(
                   textStyle: const TextStyle(
                     fontSize: 20,
@@ -79,7 +79,7 @@ class _HomePageState extends State<HomePage> {
                   elevation: 5, // Altura de la sombra
                 ),
                 child: const Text(
-                  'Sign Up',
+                  'Crear Cuenta',
                   style: TextStyle(
                     color: Colors.white, // Color blanco al texto
                     fontWeight: FontWeight.bold, // Agrega grosor al texto
@@ -101,7 +101,7 @@ class _HomePageState extends State<HomePage> {
                       Colors.transparent, // Color de sombra transparente
                 ),
                 child: const Text(
-                  'Sign In',
+                  'Iniciar Sesión',
                   style: TextStyle(
                     color: Color(0xFF204F95), // Color del texto
                     fontWeight: FontWeight.bold, // Agrega grosor al texto
@@ -113,7 +113,7 @@ class _HomePageState extends State<HomePage> {
           Container(
             margin: const EdgeInsets.all(
                 4.0), // Ajusta el margen alrededor de la imagen
-            child: Image.asset('app_logo.png'),
+            child: Image.asset('assets/images/app_logo.png'),
           ),
         ],
       ),

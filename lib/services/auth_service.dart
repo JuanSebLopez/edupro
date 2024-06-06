@@ -1,28 +1,28 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:edupro/models/auth_result.dart';
+import 'package:edupro/models/result.dart';
 
 class AuthService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<AuthResult> signIn(String email, String password) async {
+  Future<Result> signIn(String email, String password) async {
     try {
-      QuerySnapshot querySnapshot = await _firestore
+      QuerySnapshot emailQuery = await _firestore
           .collection('users')
           .where('email', isEqualTo: email)
           .where('password', isEqualTo: password)
           .get();
 
-      if (querySnapshot.docs.isNotEmpty) {
-        var userDoc = querySnapshot.docs.first;
+      if (emailQuery.docs.isNotEmpty) {
+        var userDoc = emailQuery.docs.first;
         SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.setString('userId', userDoc.id);
         await prefs.setString('userEmail', userDoc['email']);
         await prefs.setString('userName', userDoc['name']);
-        return AuthResult(success: true);
+        return Result(success: true);
       } else {
-        return AuthResult(
+        return Result(
           success: false,
           message: "Email o contraseña incorrectos.",
         );
@@ -31,33 +31,55 @@ class AuthService {
       if (kDebugMode) {
         print("Error during sign in: $e");
       }
-      return AuthResult(
+      return Result(
         success: false,
         message: "Error durante el inicio de sesión.",
       );
     }
   }
 
-  Future<AuthResult> registerUser(Map<String, dynamic> userData) async {
+  Future<Result> registerUser(Map<String, dynamic> userData) async {
     try {
-      QuerySnapshot querySnapshot = await _firestore
+      QuerySnapshot emailQuery = await _firestore
           .collection('users')
           .where('email', isEqualTo: userData['email'])
           .get();
-      if (querySnapshot.docs.isEmpty) {
-        await _firestore.collection('users').add(userData);
-        return AuthResult(success: true);
-      } else {
-        return AuthResult(
+
+      QuerySnapshot idQuery = await _firestore
+          .collection('users')
+          .where('id', isEqualTo: userData['id'])
+          .get();
+
+      QuerySnapshot phoneQuery = await _firestore
+          .collection('users')
+          .where('phoneNumber', isEqualTo: userData['phoneNumber'])
+          .get();
+
+      if (emailQuery.docs.isNotEmpty) {
+        return Result(
           success: false,
-          message: "El usuario ya está registrado.",
+          message: "El correo electrónico digitado ya se encuentra registrado.",
         );
+      } else if (idQuery.docs.isNotEmpty) {
+        return Result(
+          success: false,
+          message: "Esta Persona ya se encuentra registrada con una cuenta.",
+        );
+      } else if (phoneQuery.docs.isNotEmpty) {
+        return Result(
+          success: false,
+          message:
+              "El número de teléfono ya se encuentra registrada con una cuenta.",
+        );
+      } else {
+        await _firestore.collection('users').add(userData);
+        return Result(success: true);
       }
     } catch (e) {
       if (kDebugMode) {
         print("Error during registration: $e");
       }
-      return AuthResult(
+      return Result(
         success: false,
         message: "Error durante el registro.",
       );
