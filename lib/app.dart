@@ -8,9 +8,7 @@ import 'package:edupro/ui/views/home/profile_screen.dart';
 import 'package:edupro/ui/views/auth/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-//import 'package:google_fonts/google_fonts.dart';
 
-//Clase App
 //La clase padre que llamará a todas las demás clases del aplicativo
 class App extends StatelessWidget {
   //Constante del App que permite usarla en otros componentes
