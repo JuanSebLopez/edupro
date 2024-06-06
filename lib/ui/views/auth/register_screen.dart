@@ -1,4 +1,4 @@
-import 'package:edupro/models/auth_result.dart';
+import 'package:edupro/models/result.dart';
 import 'package:edupro/services/auth_service.dart';
 import 'package:edupro/shared/widgets/textfield.dart';
 import 'package:edupro/shared/widgets/warnings/warning_snackbar.dart';
@@ -35,7 +35,7 @@ class _RegisterPageState extends State<RegisterPage> {
         'id': idController.text,
       };
 
-      AuthResult result = await _authService.registerUser(userData);
+      Result result = await _authService.registerUser(userData);
 
       if (!mounted) return;
 

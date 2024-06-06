@@ -1,4 +1,4 @@
-import 'package:edupro/models/auth_result.dart';
+import 'package:edupro/models/result.dart';
 import 'package:edupro/services/auth_service.dart';
 import 'package:edupro/shared/widgets/textfield.dart';
 import 'package:edupro/shared/widgets/warnings/warning_snackbar.dart';
@@ -24,7 +24,7 @@ class _LoginPageState extends State<LoginPage> {
       String email = emailController.text;
       String password = passwordController.text;
 
-      AuthResult result = await _authService.signIn(email, password);
+      Result result = await _authService.signIn(email, password);
 
       if (!mounted) return;
 
