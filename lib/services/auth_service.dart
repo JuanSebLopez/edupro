@@ -20,6 +20,7 @@ class AuthService {
         await prefs.setString('userId', userDoc.id);
         await prefs.setString('userEmail', userDoc['email']);
         await prefs.setString('userName', userDoc['name']);
+        await prefs.setString('userPhoneNumber', userDoc['phoneNumber']);
         return Result(success: true);
       } else {
         return Result(
