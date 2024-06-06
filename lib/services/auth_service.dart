@@ -8,14 +8,14 @@ class AuthService {
 
   Future<AuthResult> signIn(String email, String password) async {
     try {
-      QuerySnapshot querySnapshot = await _firestore
+      QuerySnapshot emailQuery = await _firestore
           .collection('users')
           .where('email', isEqualTo: email)
           .where('password', isEqualTo: password)
           .get();
 
-      if (querySnapshot.docs.isNotEmpty) {
-        var userDoc = querySnapshot.docs.first;
+      if (emailQuery.docs.isNotEmpty) {
+        var userDoc = emailQuery.docs.first;
         SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.setString('userId', userDoc.id);
         await prefs.setString('userEmail', userDoc['email']);
@@ -40,18 +40,40 @@ class AuthService {
 
   Future<AuthResult> registerUser(Map<String, dynamic> userData) async {
     try {
-      QuerySnapshot querySnapshot = await _firestore
+      QuerySnapshot emailQuery = await _firestore
           .collection('users')
           .where('email', isEqualTo: userData['email'])
           .get();
-      if (querySnapshot.docs.isEmpty) {
-        await _firestore.collection('users').add(userData);
-        return AuthResult(success: true);
-      } else {
+
+      QuerySnapshot idQuery = await _firestore
+          .collection('users')
+          .where('id', isEqualTo: userData['id'])
+          .get();
+
+      QuerySnapshot phoneQuery = await _firestore
+          .collection('users')
+          .where('phoneNumber', isEqualTo: userData['phoneNumber'])
+          .get();
+
+      if (emailQuery.docs.isNotEmpty) {
         return AuthResult(
           success: false,
-          message: "El usuario ya está registrado.",
+          message: "El correo electrónico digitado ya se encuentra registrado.",
         );
+      } else if (idQuery.docs.isNotEmpty) {
+        return AuthResult(
+          success: false,
+          message: "Esta Persona ya se encuentra registrada con una cuenta.",
+        );
+      } else if (phoneQuery.docs.isNotEmpty) {
+        return AuthResult(
+          success: false,
+          message:
+              "El número de teléfono ya se encuentra registrada con una cuenta.",
+        );
+      } else {
+        await _firestore.collection('users').add(userData);
+        return AuthResult(success: true);
       }
     } catch (e) {
       if (kDebugMode) {

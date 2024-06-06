@@ -34,9 +34,6 @@ flutter:
     - assets/images/home_logo.png
     - assets/images/user_logo.png
     - assets/images/statistics_logo.png
-    - assets/images/background_home.svg
-    - assets/images/app_logo.svg
-
 
   # fonts:
   #   - family: Schyler
