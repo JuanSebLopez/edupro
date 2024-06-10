@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:edupro/services/questionary_service.dart';
 import 'package:edupro/shared/widgets/nav/navigation_bar.dart';
+import 'package:flutter/widgets.dart';
 import 'add_questionary_screen.dart';
 
 class HomeScreenPage extends StatefulWidget {
@@ -94,7 +95,9 @@ class _HomeScreenState extends State<HomeScreenPage> {
                       const Text(
                         "¡Bienvenido, Usuario!",
                         style: TextStyle(
-                            fontSize: 24, fontWeight: FontWeight.bold),
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       const SizedBox(height: 20.0),
                     ],
@@ -117,10 +120,11 @@ class _HomeScreenState extends State<HomeScreenPage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const AddQuestionaryScreen()),
+                    builder: (context) => const AddQuestionaryScreen(),
+                  ),
                 );
               },
-              child: const Text('Ver más módulos'),
+              child: const Icon(Icons.add),
             ),
           ),
         ],
@@ -140,21 +144,79 @@ List<Widget> _buildCompetenceCards() {
   ];
 
   return List<Widget>.generate(titles.length, (index) {
+    return CompetenceCard(
+      title: titles[index],
+      isEven: index % 2 == 0,
+    );
+  });
+}
+
+class CompetenceCard extends StatefulWidget {
+  final String title;
+  final bool isEven;
+
+  const CompetenceCard({Key? key, required this.title, required this.isEven})
+      : super(key: key);
+
+  @override
+  _CompetenceCardState createState() => _CompetenceCardState();
+}
+
+class _CompetenceCardState extends State<CompetenceCard> {
+  bool _isExpanded = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final cardColor =
+        widget.isEven ? const Color(0xFF0C549C) : const Color(0xFF33B958);
+
     return Card(
-      color: index % 2 == 0 ? const Color(0xFF0C549C) : const Color(0xFF33B958),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Text(
-          titles[index],
+      color: cardColor,
+      margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+      child: ExpansionTile(
+        title: Text(
+          widget.title,
           style: const TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
-            color: Colors.white, // Texto con opacidad normal
+            color: Colors.white,
           ),
         ),
+        trailing: Icon(
+          _isExpanded ? Icons.remove : Icons.add,
+          color: Colors.white,
+        ),
+        onExpansionChanged: (bool expanded) {
+          setState(() {
+            _isExpanded = expanded;
+          });
+        },
+        children: <Widget>[
+          ListTile(
+            title: const Text('Fácil',
+                style: const TextStyle(color: Colors.white)),
+            onTap: () {
+              // Acción al seleccionar la opción Fácil
+            },
+          ),
+          ListTile(
+            title: const Text('Medio',
+                style: const TextStyle(color: Colors.white)),
+            onTap: () {
+              // Acción al seleccionar la opción Medio
+            },
+          ),
+          ListTile(
+            title: const Text('Difícil',
+                style: const TextStyle(color: Colors.white)),
+            onTap: () {
+              // Acción al seleccionar la opción Difícil
+            },
+          ),
+        ],
       ),
     );
-  });
+  }
 }
 
 class QuestionaryDetailScreen extends StatelessWidget {
