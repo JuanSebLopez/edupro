@@ -9,7 +9,7 @@ class AuthService {
   Future<Result> signIn(String email, String password) async {
     try {
       QuerySnapshot emailQuery = await _firestore
-          .collection('users')
+          .collection('user')
           .where('email', isEqualTo: email)
           .where('password', isEqualTo: password)
           .get();
@@ -34,7 +34,7 @@ class AuthService {
       }
       return Result(
         success: false,
-        message: "Error durante el inicio de sesión.",
+        message: "Error durante el inicio de seskeión.",
       );
     }
   }
@@ -42,17 +42,17 @@ class AuthService {
   Future<Result> registerUser(Map<String, dynamic> userData) async {
     try {
       QuerySnapshot emailQuery = await _firestore
-          .collection('users')
+          .collection('user')
           .where('email', isEqualTo: userData['email'])
           .get();
 
       QuerySnapshot idQuery = await _firestore
-          .collection('users')
+          .collection('user')
           .where('id', isEqualTo: userData['id'])
           .get();
 
       QuerySnapshot phoneQuery = await _firestore
-          .collection('users')
+          .collection('user')
           .where('phoneNumber', isEqualTo: userData['phoneNumber'])
           .get();
 
@@ -73,7 +73,7 @@ class AuthService {
               "El número de teléfono ya se encuentra registrada con una cuenta.",
         );
       } else {
-        await _firestore.collection('users').add(userData);
+        await _firestore.collection('user').add(userData);
         return Result(success: true);
       }
     } catch (e) {

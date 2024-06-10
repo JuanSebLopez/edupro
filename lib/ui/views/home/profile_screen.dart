@@ -1,6 +1,7 @@
 import 'package:edupro/shared/widgets/nav/navigation_bar.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:edupro/shared/widgets/nav/statistics_card.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:edupro/shared/widgets/nav/profile_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -73,23 +74,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 color: Colors.grey,
               ),
             ),
-            const SizedBox(height: 24.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                SizedBox(
-                  width: 300,
-                  child: _buildCard(
-                    title: 'Logros',
-                    description: 'Sin logros obtenidos',
-                    count: 'count',
-                    color: Colors.blue,
-                  ),
-                ),
-                const SizedBox(height: 16),
-              ],
-            ),
-            const SizedBox(height: 24.0),
+            const SizedBox(height: 16.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -102,7 +87,54 @@ class _ProfilePageState extends State<ProfilePage> {
                     color: Colors.blue,
                   ),
                 ),
-                const SizedBox(height: 16),
+              ],
+            ),
+            const SizedBox(height: 16),
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Expanded(
+                  child: StatisticsCard(
+                    title: 'Estadísticas',
+                    icon: Icons.trending_up,
+                    count: '1.863',
+                    color: Colors.blue,
+                    percentage: '+10.9%',
+                  ),
+                ),
+                Expanded(
+                  child: StatisticsCard(
+                    title: 'Completados',
+                    icon: Icons.done,
+                    count: '1.863',
+                    color: Colors.green,
+                    percentage: '+10.9%',
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16.0),
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Expanded(
+                  child: StatisticsCard(
+                    title: 'Desafíos',
+                    icon: Icons.lightbulb,
+                    count: '1.863',
+                    color: Colors.orange,
+                    percentage: '+10.9%',
+                  ),
+                ),
+                Expanded(
+                  child: StatisticsCard(
+                    title: 'Experiencia',
+                    icon: Icons.star_border,
+                    count: '11.863',
+                    color: Colors.amber,
+                    percentage: '+10.9%',
+                  ),
+                ),
               ],
             ),
             const SizedBox(height: 24.0),

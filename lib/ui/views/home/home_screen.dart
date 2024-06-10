@@ -13,7 +13,7 @@ class HomeScreenPage extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreenPage> {
   final QuestionaryService _questionaryService = QuestionaryService();
-  Map<String, List<Map<String, dynamic>>> _competenceQuestionaries = {};
+  // Map<String, List<Map<String, dynamic>>> _competenceQuestionaries = {};
   bool _isLoading = true;
 
   @override
@@ -36,42 +36,42 @@ class _HomeScreenState extends State<HomeScreenPage> {
     }
 
     setState(() {
-      _competenceQuestionaries = competenceQuestionaries;
+      // _competenceQuestionaries = competenceQuestionaries;
       _isLoading = false;
     });
   }
 
-  Widget _buildCompetenceCard(
-      String competence, List<Map<String, dynamic>> questionaries) {
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15.0),
-      ),
-      elevation: 5,
-      margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-      child: ExpansionTile(
-        leading: Icon(Icons.book, color: Theme.of(context).primaryColor),
-        title: Text(competence,
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-        children: questionaries.map((questionary) {
-          return ListTile(
-            title: Text(questionary['name']),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => QuestionaryDetailScreen(
-                    questionaryId: questionary['id'],
-                    questionaryName: questionary['name'],
-                  ),
-                ),
-              );
-            },
-          );
-        }).toList(),
-      ),
-    );
-  }
+  // Widget _buildCompetenceCard(
+  //     String competence, List<Map<String, dynamic>> questionaries) {
+  //   return Card(
+  //     shape: RoundedRectangleBorder(
+  //       borderRadius: BorderRadius.circular(15.0),
+  //     ),
+  //     elevation: 5,
+  //     margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+  //     child: ExpansionTile(
+  //       leading: Icon(Icons.book, color: Theme.of(context).primaryColor),
+  //       title: Text(competence,
+  //           style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+  //       children: questionaries.map((questionary) {
+  //         return ListTile(
+  //           title: Text(questionary['name']),
+  //           onTap: () {
+  //             Navigator.push(
+  //               context,
+  //               MaterialPageRoute(
+  //                 builder: (context) => QuestionaryDetailScreen(
+  //                   questionaryId: questionary['id'],
+  //                   questionaryName: questionary['name'],
+  //                 ),
+  //               ),
+  //             );
+  //           },
+  //         );
+  //       }).toList(),
+  //     ),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -81,27 +81,29 @@ class _HomeScreenState extends State<HomeScreenPage> {
           SingleChildScrollView(
             child: Column(
               children: <Widget>[
-                const SizedBox(height: 10.0),
-                Container(
-                  margin: const EdgeInsets.all(4.0),
-                  child: Image.asset('assets/images/app_logo.png'),
+                Center(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      const SizedBox(height: 10.0),
+                      Container(
+                        margin: const EdgeInsets.all(4.0),
+                        child: Image.asset('assets/images/app_logo.png'),
+                      ),
+                      const SizedBox(height: 10.0),
+                      const Text(
+                        "¡Bienvenido, Usuario!",
+                        style: TextStyle(
+                            fontSize: 24, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 20.0),
+                    ],
+                  ),
                 ),
-                const SizedBox(height: 10.0),
-                const Text(
-                  "¡Bienvenido, Usuario!",
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 20.0),
                 _isLoading
                     ? const Center(child: CircularProgressIndicator())
                     : Column(
-                        children:
-                            _competenceQuestionaries.keys.map((competence) {
-                          final questionaries =
-                              _competenceQuestionaries[competence]!;
-                          return _buildCompetenceCard(
-                              competence, questionaries);
-                        }).toList(),
+                        children: _buildCompetenceCards(),
                       ),
                 const SizedBox(height: 80.0), // Espacio adicional para el FAB
               ],
@@ -126,6 +128,33 @@ class _HomeScreenState extends State<HomeScreenPage> {
       bottomNavigationBar: const NavigationBarWidget(),
     );
   }
+}
+
+List<Widget> _buildCompetenceCards() {
+  final List<String> titles = [
+    'Lectura Critica',
+    'Razonamiento Cuantitativo',
+    'Competencias Ciudadanas',
+    'Comunicación Escrita',
+    'Inglés'
+  ];
+
+  return List<Widget>.generate(titles.length, (index) {
+    return Card(
+      color: index % 2 == 0 ? const Color(0xFF0C549C) : const Color(0xFF33B958),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Text(
+          titles[index],
+          style: const TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: Colors.white, // Texto con opacidad normal
+          ),
+        ),
+      ),
+    );
+  });
 }
 
 class QuestionaryDetailScreen extends StatelessWidget {
