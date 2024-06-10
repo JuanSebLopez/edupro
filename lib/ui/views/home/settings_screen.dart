@@ -1,8 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class SettingsPage extends StatelessWidget {
+class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
+
+  @override
+  // ignore: library_private_types_in_public_api
+  _SettingsPageState createState() => _SettingsPageState();
+}
+
+class _SettingsPageState extends State<SettingsPage> {
+  String _userName = '';
+  String _email = '';
+  String _phoneNumber = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserData();
+  }
+
+  Future<void> _loadUserData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _userName = prefs.getString('userName') ?? 'Sin nombre';
+      _email = prefs.getString('userEmail') ?? 'Sin correo';
+      // Asegúrate de almacenar y recuperar el número de teléfono en el registro e inicio de sesión
+      _phoneNumber = prefs.getString('userPhoneNumber') ?? 'Sin número';
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +51,7 @@ class SettingsPage extends StatelessWidget {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(20.0), // Agregar padding de 10.0
+        padding: const EdgeInsets.all(20.0),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -39,7 +66,7 @@ class SettingsPage extends StatelessWidget {
                     },
                     child: const CircleAvatar(
                       radius: 80.0,
-                      backgroundImage: AssetImage('michael.jpg'),
+                      backgroundImage: AssetImage('assets/images/michael.jpg'),
                     ),
                   ),
                   IconButton(
@@ -52,15 +79,13 @@ class SettingsPage extends StatelessWidget {
                       children: [
                         Icon(
                           Icons.add_circle,
-                          color: Colors
-                              .white, // Color del centro del icono igual al color de fondo del módulo
-                          size: 30, // Tamaño del icono
+                          color: Colors.white,
+                          size: 30,
                         ),
                         Icon(
                           Icons.add,
-                          color: Colors
-                              .blue, // Color de la '+' en el centro del icono
-                          size: 20, // Tamaño de la '+'
+                          color: Colors.blue,
+                          size: 20,
                         ),
                       ],
                     ),
@@ -68,11 +93,10 @@ class SettingsPage extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 20.0),
-              _buildSettingsField('Nombre', 'Juan David Peralta Fuentes'),
-              _buildSettingsField(
-                  'Sobre mí', 'Texto descriptivo sobre el usuario'),
-              _buildSettingsField('Número de teléfono', '+1234567890'),
-              _buildSettingsField('Correo electrónico', 'correo@example.com'),
+              _buildSettingsField('Nombre', _userName),
+              _buildSettingsField('Sobre mí', 'Sin descripcion'),
+              _buildSettingsField('Número de teléfono', _phoneNumber),
+              _buildSettingsField('Correo electrónico', _email),
               const SizedBox(height: 20.0),
               ElevatedButton(
                 onPressed: () {
@@ -130,7 +154,6 @@ class SettingsPage extends StatelessWidget {
             decoration: InputDecoration(
               border: InputBorder.none,
               hintText: value,
-              prefix: const Text('@'),
             ),
           ),
         ),

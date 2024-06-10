@@ -1,6 +1,7 @@
-import 'package:edupro/shared/widgets/nav/navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:edupro/shared/widgets/nav/modules.dart'; // Assuming modules.dart is in the edupro folder
+import 'package:edupro/services/questionary_service.dart';
+import 'package:edupro/shared/widgets/nav/navigation_bar.dart';
+import 'add_questionary_screen.dart';
 
 class HomeScreenPage extends StatefulWidget {
   const HomeScreenPage({super.key});
@@ -11,84 +12,193 @@ class HomeScreenPage extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreenPage> {
+  final QuestionaryService _questionaryService = QuestionaryService();
+  // Map<String, List<Map<String, dynamic>>> _competenceQuestionaries = {};
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchQuestionaries();
+  }
+
+  Future<void> _fetchQuestionaries() async {
+    List<Map<String, dynamic>> questionaries =
+        await _questionaryService.fetchQuestionaries();
+    Map<String, List<Map<String, dynamic>>> competenceQuestionaries = {};
+
+    for (var questionary in questionaries) {
+      final competence = questionary['proficiency'];
+      if (!competenceQuestionaries.containsKey(competence)) {
+        competenceQuestionaries[competence] = [];
+      }
+      competenceQuestionaries[competence]!.add(questionary);
+    }
+
+    setState(() {
+      // _competenceQuestionaries = competenceQuestionaries;
+      _isLoading = false;
+    });
+  }
+
+  // Widget _buildCompetenceCard(
+  //     String competence, List<Map<String, dynamic>> questionaries) {
+  //   return Card(
+  //     shape: RoundedRectangleBorder(
+  //       borderRadius: BorderRadius.circular(15.0),
+  //     ),
+  //     elevation: 5,
+  //     margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+  //     child: ExpansionTile(
+  //       leading: Icon(Icons.book, color: Theme.of(context).primaryColor),
+  //       title: Text(competence,
+  //           style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+  //       children: questionaries.map((questionary) {
+  //         return ListTile(
+  //           title: Text(questionary['name']),
+  //           onTap: () {
+  //             Navigator.push(
+  //               context,
+  //               MaterialPageRoute(
+  //                 builder: (context) => QuestionaryDetailScreen(
+  //                   questionaryId: questionary['id'],
+  //                   questionaryName: questionary['name'],
+  //                 ),
+  //               ),
+  //             );
+  //           },
+  //         );
+  //       }).toList(),
+  //     ),
+  //   );
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              margin: const EdgeInsets.all(4.0),
-              child: Image.asset('ImgHome2Png.png'),
-            ),
-            const SizedBox(height: 20),
-            Container(
-              width: double.infinity, // Occupy full width
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: const BorderRadius.all(Radius.circular(10)),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.2),
-                    spreadRadius: 3,
-                    blurRadius: 10,
-                    offset: const Offset(0, 3),
-                  ),
-                ],
-              ),
-              child: const Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  // Widgets modulos
-                  Text('Módulos'),
-                  SizedBox(height: 16),
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        ModuleCard(
-                          title: 'Modulo 1',
-                          description: 'Descripcion 1',
-                          //imagePath: ''
-                        ),
-                      ]),
-                  SizedBox(height: 16),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+      body: Stack(
+        children: <Widget>[
+          SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                Center(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      ModuleCard(
-                        title: 'Módulo 2',
-                        description: 'Descripción breve del módulo 2',
-                        //imagePath: '',
+                      const SizedBox(height: 10.0),
+                      Container(
+                        margin: const EdgeInsets.all(4.0),
+                        child: Image.asset('assets/images/app_logo.png'),
                       ),
+                      const SizedBox(height: 10.0),
+                      const Text(
+                        "¡Bienvenido, Usuario!",
+                        style: TextStyle(
+                            fontSize: 24, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 20.0),
                     ],
                   ),
-                  SizedBox(height: 16),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      ModuleCard(
-                        title: 'Módulo 3',
-                        description: 'Descripción breve del módulo 3',
-                        //imagePath: '',
+                ),
+                _isLoading
+                    ? const Center(child: CircularProgressIndicator())
+                    : Column(
+                        children: _buildCompetenceCards(),
                       ),
-                    ],
-                  )
-                ],
-              ),
+                const SizedBox(height: 80.0), // Espacio adicional para el FAB
+              ],
             ),
-            const SizedBox(height: 20),
-            ElevatedButton(
+          ),
+          Positioned(
+            bottom: 20,
+            right: 20,
+            child: FloatingActionButton(
               onPressed: () {
-                // Handle button action
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const AddQuestionaryScreen()),
+                );
               },
               child: const Text('Ver más módulos'),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
       bottomNavigationBar: const NavigationBarWidget(),
+    );
+  }
+}
+
+List<Widget> _buildCompetenceCards() {
+  final List<String> titles = [
+    'Lectura Critica',
+    'Razonamiento Cuantitativo',
+    'Competencias Ciudadanas',
+    'Comunicación Escrita',
+    'Inglés'
+  ];
+
+  return List<Widget>.generate(titles.length, (index) {
+    return Card(
+      color: index % 2 == 0 ? const Color(0xFF0C549C) : const Color(0xFF33B958),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Text(
+          titles[index],
+          style: const TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: Colors.white, // Texto con opacidad normal
+          ),
+        ),
+      ),
+    );
+  });
+}
+
+class QuestionaryDetailScreen extends StatelessWidget {
+  final String questionaryId;
+  final String questionaryName;
+
+  const QuestionaryDetailScreen(
+      {required this.questionaryId, required this.questionaryName, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(questionaryName),
+      ),
+      body: FutureBuilder<List<Map<String, dynamic>>>(
+        future: QuestionaryService().fetchQuestions(questionaryId),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (snapshot.hasError) {
+            return const Center(child: Text('Error al cargar preguntas'));
+          }
+          if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return const Center(child: Text('No hay preguntas disponibles'));
+          }
+
+          final questions = snapshot.data!;
+          return ListView.builder(
+            itemCount: questions.length,
+            itemBuilder: (context, index) {
+              final question = questions[index];
+              return ListTile(
+                title: Text(question['question']),
+                subtitle: Text('Competencia: ${question['competence']}'),
+                onTap: () {
+                  // Acción al hacer clic en una pregunta
+                },
+              );
+            },
+          );
+        },
+      ),
     );
   }
 }

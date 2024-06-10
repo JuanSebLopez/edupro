@@ -155,7 +155,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     const SizedBox(height: 190.0),
                     Image.asset(
-                      'assets/images/app_logo.png',
+                      "assets/images/app_logo.png",
                     ),
                   ],
                 ),
