@@ -1,1 +1,0 @@
- C:\\Users\\Kadir\\OneDrive\\Escritorio\\edupro\\.dart_tool\\flutter_build\\ce4011c5c65e291edf01bc902e3718a6\\native_assets.yaml: 

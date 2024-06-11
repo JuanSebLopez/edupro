@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="gcm_defaultSenderId" translatable="false">591980991177</string>
-    <string name="google_api_key" translatable="false">AIzaSyDvWlleR1z99gtdmMClBI8kSglJi5w9HAs</string>
-    <string name="google_app_id" translatable="false">1:591980991177:android:d78f9536f908ac16ad7318</string>
-    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyDvWlleR1z99gtdmMClBI8kSglJi5w9HAs</string>
-    <string name="google_storage_bucket" translatable="false">edupro-95d8d.appspot.com</string>
-    <string name="project_id" translatable="false">edupro-95d8d</string>
-</resources>
