@@ -94,6 +94,13 @@ class _AddQuestionaryScreenState extends State<AddQuestionaryScreen> {
                 controller: _nameController,
                 decoration: const InputDecoration(
                   hintText: "Ingrese la temática del cuestionario",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    borderSide: BorderSide(
+                      color: Colors.grey,
+                      width: 1.0,
+                    ),
+                  ),
                 ),
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
@@ -173,6 +180,13 @@ class _AddQuestionaryScreenState extends State<AddQuestionaryScreen> {
                 controller: _valueController,
                 decoration: const InputDecoration(
                   hintText: "Ingrese el valor del cuestionario",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    borderSide: BorderSide(
+                      color: Colors.grey,
+                      width: 1.0,
+                    ),
+                  ),
                 ),
                 keyboardType: TextInputType.number,
                 validator: (value) {
@@ -191,6 +205,13 @@ class _AddQuestionaryScreenState extends State<AddQuestionaryScreen> {
                 controller: _questionController,
                 decoration: const InputDecoration(
                   hintText: "Ingrese la pregunta",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    borderSide: BorderSide(
+                      color: Colors.grey,
+                      width: 1.0,
+                    ),
+                  ),
                 ),
                 maxLines: null,
                 keyboardType: TextInputType.multiline,
@@ -210,6 +231,13 @@ class _AddQuestionaryScreenState extends State<AddQuestionaryScreen> {
                 controller: _responseAController,
                 decoration: const InputDecoration(
                   hintText: "Ingrese la respuesta A",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    borderSide: BorderSide(
+                      color: Colors.grey,
+                      width: 1.0,
+                    ),
+                  ),
                 ),
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
@@ -227,6 +255,13 @@ class _AddQuestionaryScreenState extends State<AddQuestionaryScreen> {
                 controller: _responseBController,
                 decoration: const InputDecoration(
                   hintText: "Ingrese la respuesta B",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    borderSide: BorderSide(
+                      color: Colors.grey,
+                      width: 1.0,
+                    ),
+                  ),
                 ),
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
@@ -244,6 +279,13 @@ class _AddQuestionaryScreenState extends State<AddQuestionaryScreen> {
                 controller: _responseCController,
                 decoration: const InputDecoration(
                   hintText: "Ingrese la respuesta C",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    borderSide: BorderSide(
+                      color: Colors.grey,
+                      width: 1.0,
+                    ),
+                  ),
                 ),
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
@@ -261,6 +303,13 @@ class _AddQuestionaryScreenState extends State<AddQuestionaryScreen> {
                 controller: _responseDController,
                 decoration: const InputDecoration(
                   hintText: "Ingrese la respuesta D",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    borderSide: BorderSide(
+                      color: Colors.grey,
+                      width: 1.0,
+                    ),
+                  ),
                 ),
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {

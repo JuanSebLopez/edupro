@@ -5,14 +5,12 @@ class StatisticsCard extends StatelessWidget {
     super.key,
     required this.title,
     required this.icon,
-    required this.count,
     required this.percentage,
     required this.color,
   });
 
   final String title;
   final IconData icon;
-  final String count;
   final String percentage;
   final Color color;
 
@@ -43,15 +41,6 @@ class StatisticsCard extends StatelessWidget {
                   ),
                 ),
               ],
-            ),
-            const SizedBox(height: 8.0),
-            Text(
-              count,
-              style: const TextStyle(
-                fontSize: 22.0,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
             ),
             const SizedBox(height: 4.0),
             Text(

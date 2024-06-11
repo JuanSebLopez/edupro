@@ -3,7 +3,7 @@ import 'package:edupro/shared/widgets/nav/statistics_card.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:edupro/shared/widgets/nav/profile_card.dart';
+// import 'package:edupro/shared/widgets/nav/profile_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -39,10 +39,7 @@ class _ProfilePageState extends State<ProfilePage> {
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.settings),
-            onPressed: () {
-              // Handle settings button press
-              // ... Navigate to settings page or perform other actions
-            },
+            onPressed: () {},
           ),
         ],
       ),
@@ -51,7 +48,16 @@ class _ProfilePageState extends State<ProfilePage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             const SizedBox(height: 10.0),
-            const Column(
+            Text(
+              _userName,
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 26.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 10.0),
+            Column(
               children: <Widget>[
                 CircleAvatar(
                   radius: 80.0,
@@ -61,33 +67,26 @@ class _ProfilePageState extends State<ProfilePage> {
               ],
             ),
             Text(
-              _userName,
+              'Nombre_Usuario',
               style: const TextStyle(
-                fontSize: 20.0,
+                fontSize: 16.0,
+                color: Colors.black,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const Text(
+            Text(
               'Estudiante',
               style: TextStyle(
-                fontSize: 16.0,
+                fontSize: 14.0,
                 color: Colors.grey,
               ),
             ),
-            const SizedBox(height: 16.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                SizedBox(
-                  width: 300,
-                  child: _buildCard(
-                    title: 'Sobre mí',
-                    description: 'Sin descripcion',
-                    count: 'count',
-                    color: Colors.blue,
-                  ),
-                ),
-              ],
+            Text(
+              'Descripcion',
+              style: TextStyle(
+                fontSize: 18.0,
+                color: Colors.black,
+              ),
             ),
             const SizedBox(height: 16),
             const Row(
@@ -97,18 +96,16 @@ class _ProfilePageState extends State<ProfilePage> {
                   child: StatisticsCard(
                     title: 'Estadísticas',
                     icon: Icons.trending_up,
-                    count: '1.863',
                     color: Colors.blue,
-                    percentage: '+10.9%',
+                    percentage: '0%',
                   ),
                 ),
                 Expanded(
                   child: StatisticsCard(
                     title: 'Completados',
                     icon: Icons.done,
-                    count: '1.863',
                     color: Colors.green,
-                    percentage: '+10.9%',
+                    percentage: '0%',
                   ),
                 ),
               ],
@@ -121,21 +118,57 @@ class _ProfilePageState extends State<ProfilePage> {
                   child: StatisticsCard(
                     title: 'Desafíos',
                     icon: Icons.lightbulb,
-                    count: '1.863',
                     color: Colors.orange,
-                    percentage: '+10.9%',
+                    percentage: '0%',
                   ),
                 ),
                 Expanded(
                   child: StatisticsCard(
-                    title: 'Experiencia',
-                    icon: Icons.star_border,
-                    count: '11.863',
+                    title: 'Ranking',
+                    icon: Icons.leaderboard_outlined,
                     color: Colors.amber,
-                    percentage: '+10.9%',
+                    percentage: '0%',
                   ),
                 ),
               ],
+            ),
+            const SizedBox(
+                height:
+                    20.0), // Espacio entre las estadísticas y el nuevo contenido
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(16.0),
+              margin: const EdgeInsets.symmetric(horizontal: 16.0),
+              decoration: BoxDecoration(
+                color: Colors.grey[200],
+                borderRadius: BorderRadius.circular(16.0),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 3,
+                    blurRadius: 7,
+                    offset: const Offset(0, 3), // changes position of shadow
+                  ),
+                ],
+              ),
+              child: const Column(
+                children: [
+                  Icon(
+                    Icons.error,
+                    size: 48,
+                    color: Colors.blue, // Cambio del color del icono a azul
+                  ),
+                  SizedBox(height: 16),
+                  Text(
+                    'Necesitas mejorar tus estadísticas, prueba repasar los temas que se te hayan complicado y vuelve a intentarlo',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      color: Colors.black,
+                    ),
+                  ),
+                ],
+              ),
             ),
             const SizedBox(height: 24.0),
           ],
@@ -146,17 +179,17 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 }
 
-Widget _buildCard({
-  required String title,
-  required String description, // For AchievementCard and AboutMeCard
-  required String count, // For PersonalStatisticsCard
-  required Color color, // For PersonalStatisticsCard
-}) {
-  if (title == 'Logros') {
-    return AchievementCard(title: title, description: description);
-  } else if (title == 'Sobre mí') {
-    return AboutMeCard(description: description);
-  } else {
-    return PersonalStatisticsCard(title: title, count: count, color: color);
-  }
-}
+// Widget _buildCard({
+//   required String title,
+//   required String description, // For AchievementCard and AboutMeCard
+//   required String count, // For PersonalStatisticsCard
+//   required Color color, // For PersonalStatisticsCard
+// }) {
+//   if (title == 'Logros') {
+//     return AchievementCard(title: title, description: description);
+//   } else if (title == 'Sobre mí') {
+//     return AboutMeCard(description: description);
+//   } else {
+//     return PersonalStatisticsCard(title: title, count: count, color: color);
+//   }
+// }
