@@ -51,9 +51,33 @@ class _AddQuestionaryScreenState extends State<AddQuestionaryScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var _selectedDifficulty;
+    var _valueController;
+
+    var _questionController;
+    var _responseAController;
+    var _responseBController;
+    var _responseCController;
+    var _responseDController;
+
+    var _selectedCorrectOption;
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Agregar Cuestionario"),
+        title: const Text(
+          "Agregar Cuestionario",
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.w800, // Extra bold
+          ),
+        ),
+        iconTheme: const IconThemeData(
+          color: Colors.white, // Color del icono de regreso
+          size: 24.0, // Tamaño del icono de regreso
+        ),
+        backgroundColor: const Color(0xFF204F95), // Fondo color
+        elevation: 10.0, // Borde inferior de 10px
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
@@ -63,80 +87,24 @@ class _AddQuestionaryScreenState extends State<AddQuestionaryScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
-                "Nombre del Cuestionario",
+                "Temática a evaluar",
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
               ),
               TextFormField(
                 controller: _nameController,
                 decoration: const InputDecoration(
-                  hintText: "Ingrese el nombre del cuestionario",
+                  hintText: "Ingrese la temática del cuestionario",
                 ),
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
-                    return 'Por favor, ingrese el nombre del cuestionario';
+                    return 'Por favor, ingrese la temática del cuestionario';
                   }
                   return null;
                 },
               ),
               const SizedBox(height: 12.0),
               const Text(
-                "Descripción",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-              ),
-              TextFormField(
-                controller: _descriptionController,
-                decoration: const InputDecoration(
-                  hintText: "Ingrese la descripción del cuestionario",
-                ),
-                validator: (value) {
-                  if (value == null || value.trim().isEmpty) {
-                    return 'Por favor, ingrese la descripción del cuestionario';
-                  }
-                  return null;
-                },
-              ),
-              const Text(
-                "Dificultad",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-              ),
-              Row(
-                children: [
-                  IconButton(
-                    icon: const Icon(Icons.remove),
-                    onPressed: () {
-                      setState(() {
-                        double value =
-                            double.tryParse(_difficultyController.text) ?? 0;
-                        if (value > 0) value -= 0.5;
-                        _difficultyController.text = value.toString();
-                      });
-                    },
-                  ),
-                  Expanded(
-                    child: TextFormField(
-                      controller: _difficultyController,
-                      decoration: const InputDecoration(
-                        hintText: "Ingrese la dificultad",
-                      ),
-                      readOnly: true,
-                    ),
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.add),
-                    onPressed: () {
-                      setState(() {
-                        double value =
-                            double.tryParse(_difficultyController.text) ?? 0;
-                        if (value < 10) value += 0.5;
-                        _difficultyController.text = value.toString();
-                      });
-                    },
-                  ),
-                ],
-              ),
-              const SizedBox(height: 12.0),
-              const Text(
-                "Competencia",
+                "Competencia a evaluar",
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
               ),
               DropdownButtonFormField<String>(
@@ -164,6 +132,167 @@ class _AddQuestionaryScreenState extends State<AddQuestionaryScreen> {
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return "Seleccione una competencia";
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 12.0),
+              const Text(
+                "Dificultad",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              ),
+              DropdownButtonFormField<String>(
+                value: _selectedDifficulty,
+                onChanged: (value) {
+                  setState(() {
+                    _selectedDifficulty = value;
+                  });
+                },
+                items: ["Fácil", "Medio", "Difícil"]
+                    .map((option) => DropdownMenuItem(
+                          value: option,
+                          child: Text(option),
+                        ))
+                    .toList(),
+                decoration: const InputDecoration(
+                  contentPadding: EdgeInsets.symmetric(vertical: 10.0),
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Seleccione una dificultad";
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 12.0),
+              const Text(
+                "Valor del cuestionario",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              ),
+              TextFormField(
+                controller: _valueController,
+                decoration: const InputDecoration(
+                  hintText: "Ingrese el valor del cuestionario",
+                ),
+                keyboardType: TextInputType.number,
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return 'Por favor, ingrese el valor del cuestionario';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 12.0),
+              const Text(
+                "Pregunta",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              ),
+              TextFormField(
+                controller: _questionController,
+                decoration: const InputDecoration(
+                  hintText: "Ingrese la pregunta",
+                ),
+                maxLines: null,
+                keyboardType: TextInputType.multiline,
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return 'Por favor, ingrese la pregunta';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 12.0),
+              const Text(
+                "Respuesta A",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              ),
+              TextFormField(
+                controller: _responseAController,
+                decoration: const InputDecoration(
+                  hintText: "Ingrese la respuesta A",
+                ),
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return 'Por favor, ingrese la respuesta A';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 12.0),
+              const Text(
+                "Respuesta B",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              ),
+              TextFormField(
+                controller: _responseBController,
+                decoration: const InputDecoration(
+                  hintText: "Ingrese la respuesta B",
+                ),
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return 'Por favor, ingrese la respuesta B';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 12.0),
+              const Text(
+                "Respuesta C",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              ),
+              TextFormField(
+                controller: _responseCController,
+                decoration: const InputDecoration(
+                  hintText: "Ingrese la respuesta C",
+                ),
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return 'Por favor, ingrese la respuesta C';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 12.0),
+              const Text(
+                "Respuesta D",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              ),
+              TextFormField(
+                controller: _responseDController,
+                decoration: const InputDecoration(
+                  hintText: "Ingrese la respuesta D",
+                ),
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return 'Por favor, ingrese la respuesta D';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 12.0),
+              const Text(
+                "Opción Correcta",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              ),
+              DropdownButtonFormField<String>(
+                value: _selectedCorrectOption,
+                onChanged: (value) {
+                  setState(() {
+                    _selectedCorrectOption = value;
+                  });
+                },
+                items: ["A", "B", "C", "D"]
+                    .map((option) => DropdownMenuItem(
+                          value: option,
+                          child: Text(option),
+                        ))
+                    .toList(),
+                decoration: const InputDecoration(
+                  contentPadding: EdgeInsets.symmetric(vertical: 10.0),
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Seleccione una opción correcta";
                   }
                   return null;
                 },
