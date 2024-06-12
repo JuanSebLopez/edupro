@@ -15,10 +15,12 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   final nameController = TextEditingController();
   final emailController = TextEditingController();
+  final usernameController = TextEditingController();
   final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
   final phoneNumberController = TextEditingController();
-  final typeIdController = TextEditingController();
   final idController = TextEditingController();
+  final careerController = TextEditingController();
   final AuthService _authService = AuthService();
   final _formKey = GlobalKey<FormState>();
   bool _obscurePassword = true;
@@ -26,13 +28,20 @@ class _RegisterPageState extends State<RegisterPage> {
 
   void _registerUser() async {
     if (_formKey.currentState != null && _formKey.currentState!.validate()) {
+      if (passwordController.text != confirmPasswordController.text) {
+        WarningSnackbar.show(context, "Las contraseñas no coinciden");
+        return;
+      }
+
       Map<String, dynamic> userData = {
         'name': nameController.text,
         'email': emailController.text,
+        'username': usernameController.text,
         'password': passwordController.text,
         'phoneNumber': phoneNumberController.text.trim(),
         'typeId': _selectedTypeId,
         'id': idController.text,
+        'career': careerController.text,
       };
 
       Result result = await _authService.registerUser(userData);
@@ -63,9 +72,12 @@ class _RegisterPageState extends State<RegisterPage> {
         // Limpiar los campos de texto
         nameController.clear();
         emailController.clear();
+        usernameController.clear();
         passwordController.clear();
+        confirmPasswordController.clear();
         phoneNumberController.clear();
         idController.clear();
+        careerController.clear();
         setState(() {
           _selectedTypeId = null;
         });
@@ -73,7 +85,7 @@ class _RegisterPageState extends State<RegisterPage> {
         WarningSnackbar.show(context, result.message ?? "Error desconocido.");
       }
     } else {
-      WarningSnackbar.show(context, "Error al llenar el formulario");
+      WarningSnackbar.show(context, "Error al completar los campos.");
     }
   }
 
@@ -88,6 +100,15 @@ class _RegisterPageState extends State<RegisterPage> {
     } else if (value.split('@').length != 2 ||
         value.split('@')[1] != 'unicesar.edu.co') {
       return 'El correo debe tener la extensión "unicesar.edu.co"';
+    }
+    return null;
+  }
+
+  String? _validateUsername(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Por favor, ingrese su nombre de usuario';
+    } else if (value.length < 3 || value.length > 15) {
+      return 'El nombre de usuario debe tener entre 3 y 15 caracteres';
     }
     return null;
   }
@@ -165,10 +186,38 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
               const SizedBox(height: 10.0),
               CustomTextField(
+                controller: usernameController,
+                labelText: "Nombre de Usuario",
+                validator: _validateUsername,
+              ),
+              const SizedBox(height: 10.0),
+              CustomTextField(
                 labelText: "Contraseña",
                 controller: passwordController,
                 obscureText: _obscurePassword,
                 validator: _validatePassword,
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    _obscurePassword ? Icons.visibility : Icons.visibility_off,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _obscurePassword = !_obscurePassword;
+                    });
+                  },
+                ),
+              ),
+              const SizedBox(height: 10.0),
+              CustomTextField(
+                labelText: "Confirmar Contraseña",
+                controller: confirmPasswordController,
+                obscureText: _obscurePassword,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Por favor, confirme su contraseña';
+                  }
+                  return null;
+                },
                 suffixIcon: IconButton(
                   icon: Icon(
                     _obscurePassword ? Icons.visibility : Icons.visibility_off,

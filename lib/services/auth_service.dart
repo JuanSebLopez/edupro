@@ -9,7 +9,7 @@ class AuthService {
   Future<Result> signIn(String email, String password) async {
     try {
       QuerySnapshot emailQuery = await _firestore
-          .collection('users')
+          .collection('user')
           .where('email', isEqualTo: email)
           .where('password', isEqualTo: password)
           .get();
@@ -20,6 +20,7 @@ class AuthService {
         await prefs.setString('userId', userDoc.id);
         await prefs.setString('userEmail', userDoc['email']);
         await prefs.setString('userName', userDoc['name']);
+        await prefs.setString('username', userDoc['username']);
         return Result(success: true);
       } else {
         return Result(
@@ -41,17 +42,17 @@ class AuthService {
   Future<Result> registerUser(Map<String, dynamic> userData) async {
     try {
       QuerySnapshot emailQuery = await _firestore
-          .collection('users')
+          .collection('user')
           .where('email', isEqualTo: userData['email'])
           .get();
 
-      QuerySnapshot idQuery = await _firestore
-          .collection('users')
-          .where('id', isEqualTo: userData['id'])
+      QuerySnapshot documentQuery = await _firestore
+          .collection('user')
+          .where('document', isEqualTo: userData['document'])
           .get();
 
       QuerySnapshot phoneQuery = await _firestore
-          .collection('users')
+          .collection('user')
           .where('phoneNumber', isEqualTo: userData['phoneNumber'])
           .get();
 
@@ -60,7 +61,7 @@ class AuthService {
           success: false,
           message: "El correo electrónico digitado ya se encuentra registrado.",
         );
-      } else if (idQuery.docs.isNotEmpty) {
+      } else if (documentQuery.docs.isNotEmpty) {
         return Result(
           success: false,
           message: "Esta Persona ya se encuentra registrada con una cuenta.",
@@ -72,7 +73,25 @@ class AuthService {
               "El número de teléfono ya se encuentra registrada con una cuenta.",
         );
       } else {
-        await _firestore.collection('users').add(userData);
+        // Crear el documento en la coleccion user
+        DocumentReference userRef = await _firestore.collection('user').add({
+          'name': userData['name'],
+          'email': userData['email'],
+          'username': userData['username'],
+          'password': userData['password'],
+          'phoneNumber': userData['phoneNumber'],
+          'documentType': userData['documentType'],
+          'document': userData['document'],
+          'profile': 'Hola bienvenido a mi perfil', // Perfil inicial
+          'status': 'Active',
+        });
+
+        // Crear el documento en la coleccion student
+        await _firestore.collection('student').add({
+          'career': userData['career'],
+          'points': 0, // Puntos iniciales
+          'userId': userRef.id,
+        });
         return Result(success: true);
       }
     } catch (e) {
