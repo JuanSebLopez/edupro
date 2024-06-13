@@ -12,8 +12,10 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
   String _userName = '';
-  String _email = '';
-  String _phoneNumber = '';
+  String _username = '';
+  String _userProfile = '';
+  String _userEmail = '';
+  String _userPhoneNumber = '';
 
   @override
   void initState() {
@@ -25,9 +27,10 @@ class _SettingsPageState extends State<SettingsPage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       _userName = prefs.getString('userName') ?? 'Sin nombre';
-      _email = prefs.getString('userEmail') ?? 'Sin correo';
-      // Asegúrate de almacenar y recuperar el número de teléfono en el registro e inicio de sesión
-      _phoneNumber = prefs.getString('userPhoneNumber') ?? 'Sin número';
+      _username = prefs.getString('username') ?? 'Sin nombre de usuario';
+      _userProfile = prefs.getString('userProfile') ?? 'Sin descripcion';
+      _userEmail = prefs.getString('userEmail') ?? 'Sin correo';
+      _userPhoneNumber = prefs.getString('userPhoneNumber') ?? 'Sin número';
     });
   }
 
@@ -94,9 +97,10 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
               const SizedBox(height: 20.0),
               _buildSettingsField('Nombre', _userName),
-              _buildSettingsField('Sobre mí', 'Sin descripcion'),
-              _buildSettingsField('Número de teléfono', _phoneNumber),
-              _buildSettingsField('Correo electrónico', _email),
+              _buildSettingsField('Nombre de usuario', _username),
+              _buildSettingsField('Descripcion', _userProfile),
+              _buildSettingsField('Número de teléfono', _userPhoneNumber),
+              _buildSettingsField('Correo electrónico', _userEmail),
               const SizedBox(height: 20.0),
               ElevatedButton(
                 onPressed: () {

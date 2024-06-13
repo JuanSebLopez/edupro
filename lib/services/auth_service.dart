@@ -20,7 +20,8 @@ class AuthService {
         await prefs.setString('userId', userDoc.id);
         await prefs.setString('userEmail', userDoc['email']);
         await prefs.setString('userName', userDoc['name']);
-        await prefs.setString('userPhoneNumber', userDoc['phoneNumber']);
+        await prefs.setString('username', userDoc['username']);
+        await prefs.setString('userProfile', userDoc['profile']);
         return Result(success: true);
       } else {
         return Result(
@@ -34,7 +35,7 @@ class AuthService {
       }
       return Result(
         success: false,
-        message: "Error durante el inicio de seskeión.",
+        message: "Error durante el inicio de sesión.",
       );
     }
   }
@@ -46,9 +47,9 @@ class AuthService {
           .where('email', isEqualTo: userData['email'])
           .get();
 
-      QuerySnapshot idQuery = await _firestore
+      QuerySnapshot documentQuery = await _firestore
           .collection('user')
-          .where('id', isEqualTo: userData['id'])
+          .where('document', isEqualTo: userData['document'])
           .get();
 
       QuerySnapshot phoneQuery = await _firestore
@@ -61,7 +62,7 @@ class AuthService {
           success: false,
           message: "El correo electrónico digitado ya se encuentra registrado.",
         );
-      } else if (idQuery.docs.isNotEmpty) {
+      } else if (documentQuery.docs.isNotEmpty) {
         return Result(
           success: false,
           message: "Esta Persona ya se encuentra registrada con una cuenta.",
@@ -73,7 +74,25 @@ class AuthService {
               "El número de teléfono ya se encuentra registrada con una cuenta.",
         );
       } else {
-        await _firestore.collection('user').add(userData);
+        // Crear el documento en la coleccion user
+        DocumentReference userRef = await _firestore.collection('user').add({
+          'name': userData['name'],
+          'email': userData['email'],
+          'username': userData['username'],
+          'password': userData['password'],
+          'phoneNumber': userData['phoneNumber'],
+          'documentType': userData['documentType'],
+          'document': userData['document'],
+          'profile': 'Hola bienvenido a mi perfil', // Perfil inicial
+          'status': 'Active',
+        });
+
+        // Crear el documento en la coleccion student
+        await _firestore.collection('student').add({
+          'career': userData['career'],
+          'points': 0, // Puntos iniciales
+          'userId': userRef.id,
+        });
         return Result(success: true);
       }
     } catch (e) {

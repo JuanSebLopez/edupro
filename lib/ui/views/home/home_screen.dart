@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:edupro/services/questionary_service.dart';
 import 'package:edupro/shared/widgets/nav/navigation_bar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'add_questionary_screen.dart';
 
 class HomeScreenPage extends StatefulWidget {
@@ -15,11 +16,20 @@ class _HomeScreenState extends State<HomeScreenPage> {
   final QuestionaryService _questionaryService = QuestionaryService();
   // Map<String, List<Map<String, dynamic>>> _competenceQuestionaries = {};
   bool _isLoading = true;
+  String _userName = '';
 
   @override
   void initState() {
     super.initState();
     _fetchQuestionaries();
+    _loadUserData();
+  }
+
+  Future<void> _loadUserData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _userName = prefs.getString('userName') ?? 'Sin nombre';
+    });
   }
 
   Future<void> _fetchQuestionaries() async {
@@ -41,38 +51,6 @@ class _HomeScreenState extends State<HomeScreenPage> {
     });
   }
 
-  // Widget _buildCompetenceCard(
-  //     String competence, List<Map<String, dynamic>> questionaries) {
-  //   return Card(
-  //     shape: RoundedRectangleBorder(
-  //       borderRadius: BorderRadius.circular(15.0),
-  //     ),
-  //     elevation: 5,
-  //     margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-  //     child: ExpansionTile(
-  //       leading: Icon(Icons.book, color: Theme.of(context).primaryColor),
-  //       title: Text(competence,
-  //           style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-  //       children: questionaries.map((questionary) {
-  //         return ListTile(
-  //           title: Text(questionary['name']),
-  //           onTap: () {
-  //             Navigator.push(
-  //               context,
-  //               MaterialPageRoute(
-  //                 builder: (context) => QuestionaryDetailScreen(
-  //                   questionaryId: questionary['id'],
-  //                   questionaryName: questionary['name'],
-  //                 ),
-  //               ),
-  //             );
-  //           },
-  //         );
-  //       }).toList(),
-  //     ),
-  //   );
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -91,10 +69,12 @@ class _HomeScreenState extends State<HomeScreenPage> {
                         child: Image.asset('assets/images/app_logo.png'),
                       ),
                       const SizedBox(height: 10.0),
-                      const Text(
-                        "¡Bienvenido, Usuario!",
-                        style: TextStyle(
-                            fontSize: 24, fontWeight: FontWeight.bold),
+                      Text(
+                        "¡Bienvenido, $_userName" "!",
+                        style: const TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       const SizedBox(height: 20.0),
                     ],
@@ -117,7 +97,8 @@ class _HomeScreenState extends State<HomeScreenPage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const AddQuestionaryScreen()),
+                    builder: (context) => const AddQuestionaryScreen(),
+                  ),
                 );
               },
               child: const Icon(Icons.add),
@@ -140,21 +121,76 @@ List<Widget> _buildCompetenceCards() {
   ];
 
   return List<Widget>.generate(titles.length, (index) {
+    return CompetenceCard(
+      title: titles[index],
+      isEven: index % 2 == 0,
+    );
+  });
+}
+
+class CompetenceCard extends StatefulWidget {
+  final String title;
+  final bool isEven;
+
+  const CompetenceCard({super.key, required this.title, required this.isEven});
+
+  @override
+  // ignore: library_private_types_in_public_api
+  _CompetenceCardState createState() => _CompetenceCardState();
+}
+
+class _CompetenceCardState extends State<CompetenceCard> {
+  bool _isExpanded = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final cardColor =
+        widget.isEven ? const Color(0xFF0C549C) : const Color(0xFF33B958);
+
     return Card(
-      color: index % 2 == 0 ? const Color(0xFF0C549C) : const Color(0xFF33B958),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Text(
-          titles[index],
+      color: cardColor,
+      margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+      child: ExpansionTile(
+        title: Text(
+          widget.title,
           style: const TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
-            color: Colors.white, // Texto con opacidad normal
+            color: Colors.white,
           ),
         ),
+        trailing: Icon(
+          _isExpanded ? Icons.remove : Icons.add,
+          color: Colors.white,
+        ),
+        onExpansionChanged: (bool expanded) {
+          setState(() {
+            _isExpanded = expanded;
+          });
+        },
+        children: <Widget>[
+          ListTile(
+            title: const Text('Fácil', style: TextStyle(color: Colors.white)),
+            onTap: () {
+              // Acción al seleccionar la opción Fácil
+            },
+          ),
+          ListTile(
+            title: const Text('Medio', style: TextStyle(color: Colors.white)),
+            onTap: () {
+              // Acción al seleccionar la opción Medio
+            },
+          ),
+          ListTile(
+            title: const Text('Difícil', style: TextStyle(color: Colors.white)),
+            onTap: () {
+              // Acción al seleccionar la opción Difícil
+            },
+          ),
+        ],
       ),
     );
-  });
+  }
 }
 
 class QuestionaryDetailScreen extends StatelessWidget {

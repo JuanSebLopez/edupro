@@ -6,14 +6,12 @@ class StatisticsCard extends StatelessWidget {
     required this.title,
     required this.icon,
     required this.count,
-    required this.percentage,
     required this.color,
   });
 
   final String title;
   final IconData icon;
   final String count;
-  final String percentage;
   final Color color;
 
   @override
@@ -51,14 +49,6 @@ class StatisticsCard extends StatelessWidget {
                 fontSize: 22.0,
                 fontWeight: FontWeight.bold,
                 color: Colors.black,
-              ),
-            ),
-            const SizedBox(height: 4.0),
-            Text(
-              percentage,
-              style: TextStyle(
-                fontSize: 14.0,
-                color: color.withOpacity(0.6),
               ),
             ),
           ],
