@@ -268,7 +268,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 labelText: "No. Documento",
                 validator: _validateId,
               ),
-              const SizedBox(height: 30.0),
+              const SizedBox(height: 20.0),
               ElevatedButton(
                 onPressed: _registerUser,
                 style: ElevatedButton.styleFrom(
@@ -291,7 +291,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   fontSize: 15.0,
                 ),
               ),
-              const SizedBox(height: 16.0),
+              const SizedBox(height: 0.0),
               ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).pop();

@@ -1,9 +1,33 @@
 import 'package:edupro/shared/widgets/nav/navigation_bar.dart';
-import 'package:edupro/shared/widgets/nav/profile_card.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:edupro/shared/widgets/nav/profile_card.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
+
+  @override
+  // ignore: library_private_types_in_public_api
+  _ProfilePageState createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  String _userName = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserData();
+  }
+
+  Future<void> _loadUserData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _userName = prefs.getString('userName') ?? 'Sin nombre';
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,21 +57,21 @@ class ProfilePage extends StatelessWidget {
                   backgroundImage: AssetImage('assets/images/michael.jpg'),
                 ),
                 SizedBox(height: 16.0),
-                Text(
-                  'Juan David Peralta Fuentes',
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  'Estudiante',
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    color: Colors.grey,
-                  ),
-                ),
               ],
+            ),
+            Text(
+              _userName,
+              style: const TextStyle(
+                fontSize: 20.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const Text(
+              'Estudiante',
+              style: TextStyle(
+                fontSize: 16.0,
+                color: Colors.grey,
+              ),
             ),
             const SizedBox(height: 24.0),
             Row(
@@ -57,7 +81,7 @@ class ProfilePage extends StatelessWidget {
                   width: 300,
                   child: _buildCard(
                     title: 'Logros',
-                    description: 'description',
+                    description: 'Sin logros obtenidos',
                     count: 'count',
                     color: Colors.blue,
                   ),
@@ -73,7 +97,7 @@ class ProfilePage extends StatelessWidget {
                   width: 300,
                   child: _buildCard(
                     title: 'Sobre mí',
-                    description: 'description',
+                    description: 'Sin descripcion',
                     count: 'count',
                     color: Colors.blue,
                   ),
