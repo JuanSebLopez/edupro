@@ -1,3 +1,6 @@
+import 'package:edupro/models/result.dart';
+import 'package:edupro/services/auth_service.dart';
+import 'package:edupro/shared/widgets/warnings/warning_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -19,9 +22,10 @@ class _SettingsPageState extends State<SettingsPage> {
 
   bool _isEditing = false;
 
-  final TextEditingController _usernameController = TextEditingController();
-  final TextEditingController _userProfileController = TextEditingController();
-  final TextEditingController _userPhoneNumberController = TextEditingController();
+  final AuthService _authService = AuthService();
+  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController profileController = TextEditingController();
+  final TextEditingController phoneNumberController = TextEditingController();
 
   @override
   void initState() {
@@ -38,17 +42,17 @@ class _SettingsPageState extends State<SettingsPage> {
       _userEmail = prefs.getString('userEmail') ?? 'Sin correo';
       _userPhoneNumber = prefs.getString('userPhoneNumber') ?? 'Sin número';
 
-      _usernameController.text = _username;
-      _userProfileController.text = _userProfile;
-      _userPhoneNumberController.text = _userPhoneNumber;
+      usernameController.text = _username;
+      profileController.text = _userProfile;
+      phoneNumberController.text = _userPhoneNumber;
     });
   }
 
   @override
   void dispose() {
-    _usernameController.dispose();
-    _userProfileController.dispose();
-    _userPhoneNumberController.dispose();
+    usernameController.dispose();
+    profileController.dispose();
+    phoneNumberController.dispose();
     super.dispose();
   }
 
@@ -58,15 +62,54 @@ class _SettingsPageState extends State<SettingsPage> {
     });
   }
 
+  void _modUser() async {
+    if (usernameController.text.trim().isEmpty ||
+        phoneNumberController.text.trim().isEmpty) {
+      WarningSnackbar.show(context,
+          "El nombre de usuario y el número de teléfono no pueden ser nulos");
+      return;
+    }
+
+    Map<String, dynamic> userData = {};
+
+    // Añadir campos solo si no están vacíos
+    if (usernameController.text.trim().isNotEmpty) {
+      userData['username'] = usernameController.text.trim();
+    }
+    if (profileController.text.trim().isNotEmpty) {
+      userData['profile'] = profileController.text.trim();
+    }
+    if (phoneNumberController.text.trim().isNotEmpty) {
+      userData['phoneNumber'] = phoneNumberController.text.trim();
+    }
+
+    _saveUserData();
+    Result result = await _authService.updateUser(userData);
+
+    if (!mounted) return;
+
+    if (result.success) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return const AlertDialog(
+            title: Text("Modificación exitosa"),
+            content: Text("El usuario ha sido modificado exitosamente."),
+          );
+        },
+      );
+    }
+  }
+
   void _saveUserData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('username', _usernameController.text);
-    prefs.setString('userProfile', _userProfileController.text);
-    prefs.setString('userPhoneNumber', _userPhoneNumberController.text);
+    prefs.setString('username', usernameController.text);
+    prefs.setString('userProfile', profileController.text);
+    prefs.setString('userPhoneNumber', phoneNumberController.text);
     setState(() {
-      _username = _usernameController.text;
-      _userProfile = _userProfileController.text;
-      _userPhoneNumber = _userPhoneNumberController.text;
+      _username = usernameController.text;
+      _userProfile = profileController.text;
+      _userPhoneNumber = phoneNumberController.text;
       _isEditing = false;
     });
   }
@@ -91,7 +134,7 @@ class _SettingsPageState extends State<SettingsPage> {
         actions: <Widget>[
           IconButton(
             icon: _isEditing ? const Icon(Icons.check) : const Icon(Icons.edit),
-            onPressed: _isEditing ? _saveUserData : _toggleEditing,
+            onPressed: _isEditing ? _modUser : _toggleEditing,
           ),
         ],
         leading: IconButton(
@@ -112,11 +155,11 @@ class _SettingsPageState extends State<SettingsPage> {
               const SizedBox(height: 20.0),
               _buildSettingsField('Nombre', _userName),
               _buildEditableSettingsField(
-                  'Nombre de usuario', _username, _usernameController),
+                  'Nombre de usuario', _username, usernameController),
               _buildEditableSettingsField(
-                  'Descripción', _userProfile, _userProfileController),
+                  'Descripción', _userProfile, profileController),
               _buildEditableSettingsField('Número de teléfono',
-                  _userPhoneNumber, _userPhoneNumberController),
+                  _userPhoneNumber, phoneNumberController),
               _buildSettingsField('Correo electrónico', _userEmail),
               const SizedBox(height: 20.0),
               ElevatedButton(
@@ -147,8 +190,7 @@ class _SettingsPageState extends State<SettingsPage> {
       alignment: Alignment.bottomRight,
       children: [
         GestureDetector(
-          onTap: () {
-          },
+          onTap: () {},
           child: const CircleAvatar(
             radius: 80.0,
             backgroundImage: AssetImage('assets/images/michael.jpg'),
@@ -156,8 +198,7 @@ class _SettingsPageState extends State<SettingsPage> {
         ),
         IconButton(
           alignment: Alignment.center,
-          onPressed: () {
-          },
+          onPressed: () {},
           icon: const Stack(
             alignment: Alignment.center,
             children: [

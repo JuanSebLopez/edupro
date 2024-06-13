@@ -41,6 +41,53 @@ class AuthService {
     }
   }
 
+  Future<Result> updateUser(Map<String, dynamic> userData) async {
+    try {
+      // Buscar el documento del usuario por número de teléfono
+      QuerySnapshot phoneQuery = await _firestore
+          .collection('user')
+          .where('phoneNumber', isEqualTo: userData['phoneNumber'])
+          .get();
+
+      if (phoneQuery.docs.isNotEmpty) {
+        DocumentSnapshot userDoc = phoneQuery.docs.first;
+        String userId = userDoc.id;
+
+        await _firestore.collection('user').doc(userId).update({
+          'username': userData['username'],
+          'profile': userData['profile'],
+          'phoneNumber': userData['phoneNumber']
+        });
+
+        // Actualizar el documento en la colección 'student'
+        QuerySnapshot studentQuery = await _firestore
+            .collection('student')
+            .where('userId', isEqualTo: userId)
+            .get();
+
+        if (studentQuery.docs.isNotEmpty) {
+          DocumentSnapshot studentDoc = studentQuery.docs.first;
+          await _firestore.collection('student').doc(studentDoc.id).update({});
+        }
+
+        return Result(success: true);
+      } else {
+        return Result(
+          success: false,
+          message: "El número de teléfono no está registrado.",
+        );
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print("Error during update: $e");
+      }
+      return Result(
+        success: false,
+        message: "Error durante la actualización.",
+      );
+    }
+  }
+
   Future<Result> registerUser(Map<String, dynamic> userData) async {
     try {
       QuerySnapshot emailQuery = await _firestore
