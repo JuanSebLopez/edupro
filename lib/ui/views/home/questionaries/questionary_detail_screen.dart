@@ -1,3 +1,4 @@
+import 'package:edupro/ui/views/home/questionaries/questions/add_question_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:edupro/services/questionary_service.dart';
@@ -154,6 +155,14 @@ class _QuestionaryDetailsScreenState extends State<QuestionaryDetailsScreen> {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           // Navegar a la pantalla de añadir pregunta
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AddQuestionScreen(
+                questionaryId: widget.questionaryId,
+              ),
+            ),
+          );
         },
         label: const Text('Añadir Pregunta'),
         icon: const Icon(Icons.add),

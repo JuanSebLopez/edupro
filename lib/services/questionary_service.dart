@@ -124,4 +124,49 @@ class QuestionaryService {
           message: "Error durante el registro del cuestionario.");
     }
   }
+
+  Future<Result> addQuestion(
+      String questionaryId, Map<String, dynamic> questionData) async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? userId = prefs.getString('userId');
+
+      if (userId == null) {
+        return Result(
+            success: false, message: "Error al obtener el ID del usuario.");
+      }
+
+      String? teacherId = await getTeacherId(userId);
+
+      if (teacherId == null) {
+        return Result(
+            success: false, message: "Error al obtener el ID del profesor.");
+      }
+
+      questionData['teacherId'] = teacherId;
+      questionData['createdAt'] = Timestamp.now();
+      questionData['status'] = "Active";
+
+      CollectionReference questionsRef = _firestore
+          .collection('questionaries')
+          .doc(questionaryId)
+          .collection('questions');
+
+      QuerySnapshot questionCountSnapshot = await questionsRef.get();
+      if (questionCountSnapshot.docs.length >= 100) {
+        return Result(
+            success: false,
+            message: "No se pueden crear más de 100 preguntas.");
+      }
+
+      await questionsRef.add(questionData);
+      return Result(success: true);
+    } catch (e) {
+      if (kDebugMode) {
+        print("Error durante la creación de la pregunta: $e");
+      }
+      return Result(
+          success: false, message: "Error durante la creación de la pregunta.");
+    }
+  }
 }
