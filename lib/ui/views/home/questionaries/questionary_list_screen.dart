@@ -1,8 +1,9 @@
-import 'package:edupro/ui/views/home/questionaries/add_questionary_screen.dart';
 import 'package:edupro/ui/views/home/questionaries/questionary_detail_screen.dart';
+import 'package:edupro/ui/views/home/questionaries/student_questionary_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:edupro/services/questionary_service.dart';
+import 'package:edupro/services/student_questionary_service.dart';
 
 class QuestionaryListScreen extends StatefulWidget {
   final String competence;
@@ -21,6 +22,8 @@ class QuestionaryListScreen extends StatefulWidget {
 
 class _QuestionaryListScreenState extends State<QuestionaryListScreen> {
   final QuestionaryService _questionaryService = QuestionaryService();
+  final StudentQuestionaryService _studentQuestionaryService =
+      StudentQuestionaryService();
   bool _isLoading = true;
   List<Map<String, dynamic>> _questionaries = [];
   String _userRole = '';
@@ -86,14 +89,26 @@ class _QuestionaryListScreenState extends State<QuestionaryListScreen> {
           color: isCompleted ? Colors.green : Colors.grey,
         ),
         onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => QuestionaryDetailsScreen(
-                questionaryId: questionary['id'],
+          if (_userRole == 'teacher') {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => QuestionaryDetailsScreen(
+                  questionaryId: questionary['id'],
+                ),
               ),
-            ),
-          );
+            );
+          } else {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => StudentQuestionaryDetailsScreen(
+                  questionaryId: questionary['id'],
+                  isCompleted: isCompleted,
+                ),
+              ),
+            );
+          }
         },
       ),
     );
@@ -116,13 +131,7 @@ class _QuestionaryListScreenState extends State<QuestionaryListScreen> {
       floatingActionButton: _userRole == 'teacher'
           ? FloatingActionButton(
               onPressed: () {
-                // Navegar a la pantalla de añadir cuestionario
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const AddQuestionaryScreen(),
-                  ),
-                );
+                Navigator.pushNamed(context, '/addQuestionary');
               },
               child: const Icon(Icons.add),
             )
