@@ -10,19 +10,19 @@ class NavigationBarWidget extends StatelessWidget {
       backgroundColor: const Color(0xFFEFEFEF), // Color de fondo personalizado
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
-          icon: Icon(Icons.trending_up,
+          icon: Icon(Icons.leaderboard_outlined,
               color: Color(0xFF0C549C)), // Color del icono personalizado
-          label: 'Estatistics', // Etiqueta vacía
+          label: 'Ranking', // Etiqueta vacía
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.home,
               color: Color(0xFF0C549C)), // Color del icono personalizado
-          label: 'Home', // Etiqueta vacía
+          label: 'Inicio', // Etiqueta vacía
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.person,
               color: Color(0xFF0C549C)), // Color del icono personalizado
-          label: 'Profile', // Etiqueta vacía
+          label: 'Mi perfil', // Etiqueta vacía
         ),
       ],
       currentIndex: _getCurrentIndex(currentRoute),
