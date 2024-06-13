@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:edupro/shared/widgets/nav/navigation_bar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'questionaries/questionary_list_screen.dart';
 
 class HomeScreenPage extends StatefulWidget {
@@ -12,6 +13,7 @@ class HomeScreenPage extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreenPage> {
   bool _isLoading = true;
+  String _userName = '';
 
   @override
   void initState() {
@@ -22,6 +24,14 @@ class _HomeScreenState extends State<HomeScreenPage> {
   Future<void> _fetchQuestionaries() async {
     setState(() {
       _isLoading = false;
+    });
+    _loadUserData();
+  }
+
+  Future<void> _loadUserData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _userName = prefs.getString('userName') ?? 'Sin nombre';
     });
   }
 
@@ -106,9 +116,10 @@ class _HomeScreenState extends State<HomeScreenPage> {
                   child: Image.asset('assets/images/app_logo.png'),
                 ),
                 const SizedBox(height: 10.0),
-                const Text(
-                  "¡Bienvenido, Usuario!",
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                Text(
+                  "¡Bienvenido,$_userName" "!",
+                  style: const TextStyle(
+                      fontSize: 24, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 20.0),
                 _isLoading
