@@ -3,7 +3,6 @@ import 'package:edupro/ui/views/home/questionaries/student_questionary_details_s
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:edupro/services/questionary_service.dart';
-import 'package:edupro/services/student_questionary_service.dart';
 
 class QuestionaryListScreen extends StatefulWidget {
   final String competence;
@@ -22,8 +21,6 @@ class QuestionaryListScreen extends StatefulWidget {
 
 class _QuestionaryListScreenState extends State<QuestionaryListScreen> {
   final QuestionaryService _questionaryService = QuestionaryService();
-  final StudentQuestionaryService _studentQuestionaryService =
-      StudentQuestionaryService();
   bool _isLoading = true;
   List<Map<String, dynamic>> _questionaries = [];
   String _userRole = '';
