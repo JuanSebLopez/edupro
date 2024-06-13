@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsPage extends StatefulWidget {
-  const SettingsPage({Key? key}) : super(key: key);
+  const SettingsPage({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _SettingsPageState createState() => _SettingsPageState();
 }
 
@@ -17,10 +17,11 @@ class _SettingsPageState extends State<SettingsPage> {
   String _userEmail = '';
   String _userPhoneNumber = '';
 
-  bool _isEditing =
-      false; // Nuevo estado para controlar la edición del nombre de usuario
+  bool _isEditing = false;
 
-  TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _userProfileController = TextEditingController();
+  final TextEditingController _userPhoneNumberController = TextEditingController();
 
   @override
   void initState() {
@@ -36,15 +37,18 @@ class _SettingsPageState extends State<SettingsPage> {
       _userProfile = prefs.getString('userProfile') ?? 'Sin descripcion';
       _userEmail = prefs.getString('userEmail') ?? 'Sin correo';
       _userPhoneNumber = prefs.getString('userPhoneNumber') ?? 'Sin número';
-      _usernameController.text =
-          _username; // Inicializar el controlador con el valor del nombre de usuario
+
+      _usernameController.text = _username;
+      _userProfileController.text = _userProfile;
+      _userPhoneNumberController.text = _userPhoneNumber;
     });
   }
 
   @override
   void dispose() {
-    _usernameController
-        .dispose(); // Liberar el controlador cuando ya no se necesite
+    _usernameController.dispose();
+    _userProfileController.dispose();
+    _userPhoneNumberController.dispose();
     super.dispose();
   }
 
@@ -54,14 +58,16 @@ class _SettingsPageState extends State<SettingsPage> {
     });
   }
 
-  void _saveUsername() async {
+  void _saveUserData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('username',
-        _usernameController.text); // Guardar el nombre de usuario editado
+    prefs.setString('username', _usernameController.text);
+    prefs.setString('userProfile', _userProfileController.text);
+    prefs.setString('userPhoneNumber', _userPhoneNumberController.text);
     setState(() {
-      _username = _usernameController
-          .text; // Actualizar el estado con el nuevo nombre de usuario
-      _isEditing = false; // Salir del modo de edición
+      _username = _usernameController.text;
+      _userProfile = _userProfileController.text;
+      _userPhoneNumber = _userPhoneNumberController.text;
+      _isEditing = false;
     });
   }
 
@@ -85,7 +91,7 @@ class _SettingsPageState extends State<SettingsPage> {
         actions: <Widget>[
           IconButton(
             icon: _isEditing ? const Icon(Icons.check) : const Icon(Icons.edit),
-            onPressed: _isEditing ? _saveUsername : _toggleEditing,
+            onPressed: _isEditing ? _saveUserData : _toggleEditing,
           ),
         ],
         leading: IconButton(
@@ -105,9 +111,12 @@ class _SettingsPageState extends State<SettingsPage> {
               _buildProfileImage(),
               const SizedBox(height: 20.0),
               _buildSettingsField('Nombre', _userName),
-              _buildEditableSettingsField('Nombre de usuario', _username),
-              _buildSettingsField('Descripción', _userProfile),
-              _buildSettingsField('Número de teléfono', _userPhoneNumber),
+              _buildEditableSettingsField(
+                  'Nombre de usuario', _username, _usernameController),
+              _buildEditableSettingsField(
+                  'Descripción', _userProfile, _userProfileController),
+              _buildEditableSettingsField('Número de teléfono',
+                  _userPhoneNumber, _userPhoneNumberController),
               _buildSettingsField('Correo electrónico', _userEmail),
               const SizedBox(height: 20.0),
               ElevatedButton(
@@ -139,7 +148,6 @@ class _SettingsPageState extends State<SettingsPage> {
       children: [
         GestureDetector(
           onTap: () {
-            // Agregar aquí la lógica para abrir la galería
           },
           child: const CircleAvatar(
             radius: 80.0,
@@ -149,7 +157,6 @@ class _SettingsPageState extends State<SettingsPage> {
         IconButton(
           alignment: Alignment.center,
           onPressed: () {
-            // Agregar aquí la lógica necesaria
           },
           icon: const Stack(
             alignment: Alignment.center,
@@ -184,12 +191,8 @@ class _SettingsPageState extends State<SettingsPage> {
         ),
         const SizedBox(height: 6.0),
         Container(
-          constraints: const BoxConstraints(
-              minWidth: 400,
-              maxWidth: 600), // Ajusta los valores mínimos y máximos del ancho
-          padding: const EdgeInsets.symmetric(
-              horizontal: 12.0,
-              vertical: 10.0), // Aumenta el relleno vertical para separación
+          constraints: const BoxConstraints(minWidth: 400, maxWidth: 600),
+          padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 10.0),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(8.0),
@@ -203,8 +206,7 @@ class _SettingsPageState extends State<SettingsPage> {
             ],
           ),
           child: Column(
-            crossAxisAlignment:
-                CrossAxisAlignment.start, // Alinea el texto al inicio
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 value,
@@ -218,7 +220,8 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  Widget _buildEditableSettingsField(String label, String value) {
+  Widget _buildEditableSettingsField(
+      String label, String value, TextEditingController controller) {
     if (_isEditing) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -232,10 +235,7 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
           const SizedBox(height: 6.0),
           Container(
-            constraints: const BoxConstraints(
-                minWidth: 400,
-                maxWidth:
-                    600), // Ajusta los valores mínimos y máximos del ancho
+            constraints: const BoxConstraints(minWidth: 400, maxWidth: 600),
             padding:
                 const EdgeInsets.symmetric(horizontal: 12.0, vertical: 10.0),
             decoration: BoxDecoration(
@@ -251,7 +251,7 @@ class _SettingsPageState extends State<SettingsPage> {
               ],
             ),
             child: TextFormField(
-              controller: _usernameController,
+              controller: controller,
               decoration: const InputDecoration(
                 border: InputBorder.none,
               ),
