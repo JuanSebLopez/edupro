@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:edupro/services/questionary_service.dart';
 import 'package:edupro/shared/widgets/nav/navigation_bar.dart';
-import 'add_questionary_screen.dart';
+import 'questionaries/questionary_list_screen.dart';
 
 class HomeScreenPage extends StatefulWidget {
   const HomeScreenPage({super.key});
@@ -12,8 +11,6 @@ class HomeScreenPage extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreenPage> {
-  final QuestionaryService _questionaryService = QuestionaryService();
-  Map<String, List<Map<String, dynamic>>> _competenceQuestionaries = {};
   bool _isLoading = true;
 
   @override
@@ -23,26 +20,12 @@ class _HomeScreenState extends State<HomeScreenPage> {
   }
 
   Future<void> _fetchQuestionaries() async {
-    List<Map<String, dynamic>> questionaries =
-        await _questionaryService.fetchQuestionaries();
-    Map<String, List<Map<String, dynamic>>> competenceQuestionaries = {};
-
-    for (var questionary in questionaries) {
-      final competence = questionary['proficiency'];
-      if (!competenceQuestionaries.containsKey(competence)) {
-        competenceQuestionaries[competence] = [];
-      }
-      competenceQuestionaries[competence]!.add(questionary);
-    }
-
     setState(() {
-      _competenceQuestionaries = competenceQuestionaries;
       _isLoading = false;
     });
   }
 
-  Widget _buildCompetenceCard(
-      String competence, List<Map<String, dynamic>> questionaries) {
+  Widget _buildCompetenceCard(String competence) {
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15.0),
@@ -53,28 +36,64 @@ class _HomeScreenState extends State<HomeScreenPage> {
         leading: Icon(Icons.book, color: Theme.of(context).primaryColor),
         title: Text(competence,
             style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-        children: questionaries.map((questionary) {
-          return ListTile(
-            title: Text(questionary['name']),
+        children: <Widget>[
+          ListTile(
+            title: const Text('Fácil'),
             onTap: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => QuestionaryDetailScreen(
-                    questionaryId: questionary['id'],
-                    questionaryName: questionary['name'],
+                  builder: (context) => QuestionaryListScreen(
+                    competence: competence,
+                    difficulty: 'Fácil',
                   ),
                 ),
               );
             },
-          );
-        }).toList(),
+          ),
+          ListTile(
+            title: const Text('Intermedio'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => QuestionaryListScreen(
+                    competence: competence,
+                    difficulty: 'Intermedio',
+                  ),
+                ),
+              );
+            },
+          ),
+          ListTile(
+            title: const Text('Difícil'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => QuestionaryListScreen(
+                    competence: competence,
+                    difficulty: 'Difícil',
+                  ),
+                ),
+              );
+            },
+          ),
+        ],
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    final competences = [
+      'Lectura Crítica',
+      'Razonamiento Cuantitativo',
+      'Competencias Ciudadanas',
+      'Comunicación Escrita',
+      'Inglés'
+    ];
+
     return Scaffold(
       body: Stack(
         children: <Widget>[
@@ -95,81 +114,17 @@ class _HomeScreenState extends State<HomeScreenPage> {
                 _isLoading
                     ? const Center(child: CircularProgressIndicator())
                     : Column(
-                        children:
-                            _competenceQuestionaries.keys.map((competence) {
-                          final questionaries =
-                              _competenceQuestionaries[competence]!;
-                          return _buildCompetenceCard(
-                              competence, questionaries);
+                        children: competences.map((competence) {
+                          return _buildCompetenceCard(competence);
                         }).toList(),
                       ),
-                const SizedBox(height: 80.0), // Espacio adicional para el FAB
+                const SizedBox(height: 80.0),
               ],
-            ),
-          ),
-          Positioned(
-            bottom: 20,
-            right: 20,
-            child: FloatingActionButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const AddQuestionaryScreen()),
-                );
-              },
-              child: const Icon(Icons.add),
             ),
           ),
         ],
       ),
       bottomNavigationBar: const NavigationBarWidget(),
-    );
-  }
-}
-
-class QuestionaryDetailScreen extends StatelessWidget {
-  final String questionaryId;
-  final String questionaryName;
-
-  const QuestionaryDetailScreen(
-      {required this.questionaryId, required this.questionaryName, super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(questionaryName),
-      ),
-      body: FutureBuilder<List<Map<String, dynamic>>>(
-        future: QuestionaryService().fetchQuestions(questionaryId),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          if (snapshot.hasError) {
-            return const Center(child: Text('Error al cargar preguntas'));
-          }
-          if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Center(child: Text('No hay preguntas disponibles'));
-          }
-
-          final questions = snapshot.data!;
-          return ListView.builder(
-            itemCount: questions.length,
-            itemBuilder: (context, index) {
-              final question = questions[index];
-              return ListTile(
-                title: Text(question['question']),
-                subtitle: Text('Competencia: ${question['competence']}'),
-                onTap: () {
-                  // Acción al hacer clic en una pregunta
-                },
-              );
-            },
-          );
-        },
-      ),
     );
   }
 }

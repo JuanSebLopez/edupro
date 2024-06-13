@@ -6,49 +6,89 @@ import 'package:edupro/models/result.dart';
 class QuestionaryService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<List<Map<String, dynamic>>> fetchQuestionaries() async {
-    try {
-      QuerySnapshot querySnapshot =
-          await _firestore.collection('questionary').get();
-      return querySnapshot.docs
-          .map((doc) => {
-                'id': doc.id,
-                'name': doc['name'],
-                'description': doc['description'],
-                'proficiency': doc['proficiency'],
-                'userId': doc['userId'],
-                'difficulty': doc['difficulty'],
-                'createdAt': doc['createdAt']
-                // Añadir otros campos aquí si es necesario
-              })
+  Future<List<Map<String, dynamic>>> fetchQuestionaries(
+      String competence, String difficulty, String userRole) async {
+    Query query = _firestore
+        .collection('questionaries')
+        .where('proficiency', isEqualTo: competence)
+        .where('difficulty', isEqualTo: difficulty);
+
+    // Filtrar solo cuestionarios activos para estudiantes
+    if (userRole == 'student') {
+      query = query.where('status', isEqualTo: 'Active');
+    }
+
+    QuerySnapshot querySnapshot = await query.get();
+
+    return querySnapshot.docs
+        .map((doc) => {
+              'id': doc.id,
+              'name': doc['name'],
+              'description': doc['description'],
+              'time': doc['time'],
+            })
+        .toList();
+  }
+
+  Future<List<String>> fetchCompletedQuestionaries(String userId) async {
+    QuerySnapshot studentQuery = await _firestore
+        .collection('student')
+        .where('userId', isEqualTo: userId)
+        .get();
+
+    if (studentQuery.docs.isNotEmpty) {
+      var studentDoc = studentQuery.docs.first;
+      String studentId = studentDoc.id;
+
+      QuerySnapshot snapshot = await _firestore
+          .collection('student')
+          .doc(studentId)
+          .collection('completedQuestionaries')
+          .get();
+
+      return snapshot.docs
+          .map((doc) => doc['questionaryId'] as String)
           .toList();
-    } catch (e) {
+    } else {
       return [];
     }
   }
 
-  Future<List<Map<String, dynamic>>> fetchQuestions(
+  Future<Map<String, dynamic>> fetchQuestionaryDetails(
       String questionaryId) async {
-    try {
-      QuerySnapshot querySnapshot = await _firestore
-          .collection('questions')
-          .where('questionaryId', isEqualTo: questionaryId)
-          .get();
-      return querySnapshot.docs
-          .map((doc) => {
-                'id': doc.id,
-                'question': doc['question'],
-                'answers': doc['answers'],
-                'correctAnswer': doc['correctAnswer'],
-                'competence': doc['competence'],
-                'userId': doc['userId'],
-                'status': doc['status'],
-                'createdAt': doc['createdAt'],
-                // Añadir otros campos aquí si es necesario
-              })
-          .toList();
-    } catch (e) {
-      return [];
+    DocumentSnapshot docSnapshot =
+        await _firestore.collection('questionaries').doc(questionaryId).get();
+
+    return docSnapshot.data() as Map<String, dynamic>;
+  }
+
+  Future<void> updateQuestionaryField(
+      String questionaryId, String field, String value) async {
+    await _firestore
+        .collection('questionaries')
+        .doc(questionaryId)
+        .update({field: value});
+  }
+
+  Future<String> getTeacherName(String teacherId) async {
+    DocumentSnapshot teacherDoc =
+        await _firestore.collection('teacher').doc(teacherId).get();
+    String userId = teacherDoc['userId'];
+    DocumentSnapshot userDoc =
+        await _firestore.collection('user').doc(userId).get();
+    return userDoc['name'];
+  }
+
+  Future<String?> getTeacherId(String userId) async {
+    QuerySnapshot teacherQuery = await _firestore
+        .collection('teacher')
+        .where('userId', isEqualTo: userId)
+        .get();
+
+    if (teacherQuery.docs.isNotEmpty) {
+      return teacherQuery.docs.first.id;
+    } else {
+      return null;
     }
   }
 
@@ -62,15 +102,22 @@ class QuestionaryService {
             success: false, message: "Error al obtener el ID del usuario.");
       }
 
-      questionaryData['userId'] = userId;
-      questionaryData['createdAt'] = DateTime.now().toUtc().toString();
-      questionaryData['status'] = "Activo";
+      String? teacherId = await getTeacherId(userId);
 
-      await _firestore.collection('questionary').add(questionaryData);
+      if (teacherId == null) {
+        return Result(
+            success: false, message: "Error al obtener el ID del profesor.");
+      }
+
+      questionaryData['teacherId'] = teacherId;
+      questionaryData['createdAt'] = Timestamp.now();
+      questionaryData['status'] = "Active";
+
+      await _firestore.collection('questionaries').add(questionaryData);
       return Result(success: true);
     } catch (e) {
       if (kDebugMode) {
-        print("Error during questionary addition: $e");
+        print("Error durante el registro del cuestionario: $e");
       }
       return Result(
           success: false,

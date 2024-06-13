@@ -13,7 +13,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final TextEditingController emailController = TextEditingController();
+  final TextEditingController identifierController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final AuthService _authService = AuthService();
   final _formKey = GlobalKey<FormState>();
@@ -21,32 +21,25 @@ class _LoginPageState extends State<LoginPage> {
 
   void _signIn() async {
     if (_formKey.currentState != null && _formKey.currentState!.validate()) {
-      String email = emailController.text;
+      String identifier = identifierController.text;
       String password = passwordController.text;
 
-      Result result = await _authService.signIn(email, password);
+      Result result = await _authService.signIn(identifier, password);
 
       if (!mounted) return;
 
       if (result.success) {
-        Navigator.pushNamed(context, '/homeScreen');
+        Navigator.pushNamedAndRemoveUntil(
+            context, '/homeScreen', (route) => false);
       } else {
         WarningSnackbar.show(context, result.message ?? "Error desconocido.");
       }
     }
   }
 
-  String? _validateEmail(String? value) {
+  String? _validateIdentifier(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Por favor, ingrese su correo';
-    } else if (value.length < 6 || value.length > 30) {
-      return 'El correo incorrecto o no válido';
-    } else if (!RegExp(r'^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+')
-        .hasMatch(value)) {
-      return 'El correo incorrecto o no válido';
-    } else if (value.split('@').length != 2 ||
-        value.split('@')[1] != 'unicesar.edu.co') {
-      return 'El correo incorrecto o no válido';
+      return 'Por favor, ingrese su correo o nombre de usuario';
     }
     return null;
   }
@@ -88,9 +81,9 @@ class _LoginPageState extends State<LoginPage> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
                 CustomTextField(
-                  controller: emailController,
-                  labelText: 'Correo Electrónico',
-                  validator: _validateEmail,
+                  controller: identifierController,
+                  labelText: 'Correo Electrónico o Nombre de Usuario',
+                  validator: _validateIdentifier,
                 ),
                 const SizedBox(height: 10.0),
                 CustomTextField(
