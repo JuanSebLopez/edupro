@@ -93,11 +93,11 @@ class RankingTable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Map<String, dynamic>> rankingData = [
-      {'name': 'Jason Mendoza', 'score': 597},
-      {'name': 'Cindy Martinez', 'score': 252},
-      {'name': 'Ashley Del prado', 'score': 224},
-      {'name': 'Tiffany Maestre', 'score': 153},
-      {'name': 'Sergio Diaz', 'score': 156},
+      {'name': 'Sin registro', 'score': 0},
+      {'name': 'Sin registro', 'score': 0},
+      {'name': 'Sin registro', 'score': 0},
+      {'name': 'Sin registro', 'score': 0},
+      {'name': 'Sin registro', 'score': 0},
     ];
 
     return Padding(

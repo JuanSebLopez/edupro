@@ -113,7 +113,7 @@ class AuthService {
 
       QuerySnapshot documentQuery = await _firestore
           .collection('user')
-          .where('document', isEqualTo: userData['document'])
+          .where('document', isEqualTo: userData['id'])
           .get();
 
       QuerySnapshot phoneQuery = await _firestore

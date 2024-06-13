@@ -92,13 +92,6 @@ class _ProfilePageState extends State<ProfilePage> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const Text(
-              'Estudiante',
-              style: TextStyle(
-                fontSize: 14.0,
-                color: Colors.grey,
-              ),
-            ),
             Text(
               _userProfile,
               style: const TextStyle(
